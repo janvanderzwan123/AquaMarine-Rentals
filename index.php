@@ -52,7 +52,7 @@ include 'header.php';
             </div>
             <!-- Boat Listings -->
             <div class="col-md-9">
-                <!-- Add your boat listings here -->
+                <?php include 'advertenties.php'; ?>
             </div>
         </div>
     </div>
