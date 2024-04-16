@@ -1,0 +1,28 @@
+.boat-listing {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.boat-image {
+    flex: 0 0 100px; /* Fixed width for image */
+    padding: 10px;
+}
+
+.boat-image img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.boat-details {
+    flex: 1; /* Take remaining space */
+    padding: 10px;
+}
+
+.boat-calendar {
+    flex: 0 0 40px; /* Fixed width for calendar icon */
+    padding: 10px;
+    text-align: center;
+}
