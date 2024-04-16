@@ -1,9 +1,15 @@
+/* CSS Styles for boat listings */
+body {
+    background-color: #f0f9ff; /* Light blue background */
+}
+
 .boat-listing {
-    display: flex;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White background for boat listing */
+    border: 1px solid #d1e9fd; /* Light blue border */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+    display: flex;
 }
 
 .boat-image {
@@ -19,6 +25,14 @@
 .boat-details {
     flex: 1; /* Take remaining space */
     padding: 10px;
+}
+
+.boat-details h2 {
+    color: #006bb3; /* Blue heading color */
+}
+
+.boat-details p {
+    color: #333; /* Dark text color */
 }
 
 .boat-calendar {
