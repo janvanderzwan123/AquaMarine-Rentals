@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($wachtwoord !== $wachtwoord_herhalen) {
         include 'register_error.php';
+        exit();
     }
 
     $sql = "INSERT INTO gebruikers (gebruikersnaam, emailadres, wachtwoord, rol_id) 
