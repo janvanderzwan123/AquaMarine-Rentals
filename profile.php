@@ -58,11 +58,11 @@ if ($result->num_rows > 0) {
             <h2>Jouw kalender:</h2>
             <div class="calendar">
                 <div class="header">
-                    <div class="month-year">Maand Jaar</div><br>
+                    <div class="month-year">Maand Jaar</div>
                     <div class="days-of-week">
                         <div>Zo</div>
                         <div>Ma</div>
-                        <div>Di</div>
+                        <div>Di</div><br />
                         <div>Wo</div>
                         <div>Do</div>
                         <div>Vr</div>
@@ -93,7 +93,7 @@ if ($result->num_rows > 0) {
 
                         // Check if it's the last day of the week or the last day of the month
                         if (($i % 7 === 0 && $i !== $daysInMonth) || $i === $daysInMonth) {
-                            echo '</div>'; // Close the week div
+                            echo '</div><br />'; // Close the week div
                         }
                     }
                     ?>
