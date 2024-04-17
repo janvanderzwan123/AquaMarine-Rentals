@@ -57,7 +57,7 @@ if(isset($_GET['advertentie_id'])) {
                         <!-- Display other boat details here -->
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary btn-block">Reserveer</button>
+                        <a href="reserveren.php"><button class="btn btn-primary btn-block">Reserveer</button></a>
                     </div>
                 </div>
             </div>
