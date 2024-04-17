@@ -11,10 +11,8 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="alert alert-danger" role="alert">
-                    <h4 class="alert-heading">Login Failed!</h4>
-                    <p>Sorry, the provided username, password, or role is incorrect. Please try again.</p>
-                    <hr>
-                    <p class="mb-0">If you continue to experience issues, please contact support.</p>
+                    <h4 class="alert-heading">Login Mislukt!</h4>
+                    <p>Sorry, de ingevulde gebruikersnaam, wachtwoord of rol was verkeerd. Probeer opnieuw.</p>
                 </div>
                 <div class="text-center">
                     <a href="login.php" class="btn btn-primary">Back to Login</a>

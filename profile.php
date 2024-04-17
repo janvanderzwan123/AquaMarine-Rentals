@@ -65,7 +65,6 @@ if ($role === 'verhuurder') {
         <?php endif; ?>
     </div>
 
-    <!-- Display editable calendar for verhuurder users -->
     <?php if ($role === 'verhuurder'): ?>
         <h3>Jouw kalender:</h3>
         <div id="calendar"></div>
