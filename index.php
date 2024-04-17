@@ -16,7 +16,6 @@ include 'header.php';
             </div>
         </div>
         <div class="row">
-            <!-- Filter Menu -->
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
@@ -58,17 +57,11 @@ include 'header.php';
                                 <label for="passagiers">Aantal passagiers</label>
                                 <input type="number" class="form-control" id="passagiers" name="passagiers" value="<?php echo isset($_GET['passagiers']) ? htmlspecialchars($_GET['passagiers']) : ''; ?>">
                             </div>
-                            <!-- Submit button -->
                             <button type="submit" class="btn btn-primary" name="submit">Filters Toepassen</button>
-
-                            <!-- Reset button -->
-                            <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="btn btn-secondary">Filters Resetten</a>
                         </form>
                     </div>
                 </div>
             </div>
-
-            <!-- Boat Listings -->
             <div class="col-md-9">
                 <?php include 'advertenties.php'; ?>
             </div>
