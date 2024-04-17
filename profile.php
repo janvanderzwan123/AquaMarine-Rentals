@@ -1,22 +1,17 @@
 <?php
 include 'database.php';
-include 'header.php'; // Including header.php
+include 'header.php';
 
-// Start session
+
 session_start();
 
-// Check if user is logged in
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
-    // Redirect user to login page if not logged in
     header("Location: login.php");
     exit();
 }
-
-// Get user details from session or database
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 
-// Fetch user details and advertisements using JOIN
 $sql = "SELECT a.*, g.gebruikersnaam 
         FROM advertenties a 
         INNER JOIN gebruikers g ON a.verhuurder_id = g.gebruiker_id 
@@ -37,7 +32,6 @@ $result = $conn->query($sql);
                             <h5 class="card-title"><?php echo $row["boot_naam"]; ?></h5>
                             <p class="card-text">Type: <?php echo $row["boot_type"]; ?></p>
                             <p class="card-text">Locatie: <?php echo $row["locatie"]; ?></p>
-                            <!-- Add more details as needed -->
                         </div>
                     </div>
                 </div>
@@ -48,4 +42,4 @@ $result = $conn->query($sql);
     </div>
 </div>
 
-<?php include 'footer.php'; ?> <!-- Including footer.php -->
+<?php include 'footer.php'; ?>
