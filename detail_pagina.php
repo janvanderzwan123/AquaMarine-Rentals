@@ -2,52 +2,35 @@
 include 'header.php'; 
 include 'database.php';
 
-// Enable error reporting for debugging (remove in production)
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Get the advertentie_id from the URL
-$advertentie_id = isset($_GET['advertentie_id']) ? intval($_GET['advertentie_id']) : 0;
+if(isset($_GET['advertentie_id'])) {
+    $advertentie_id = $_GET['advertentie_id'];
 
-if ($advertentie_id === 0) {
-    echo '<p>Invalid advertentie ID.</p>';
-    include 'footer.php';
-    exit;
-}
+    // Fetch boat details from the database based on advertentie_id
+    $sql = "SELECT * FROM advertenties WHERE advertentie_id = $advertentie_id";
+    $result = $conn->query($sql);
 
-// Fetch boat details from the database based on advertentie_id
-$boot_details_sql = "SELECT * FROM advertenties WHERE advertentie_id = $advertentie_id";
-$boot_details_result = $conn->query($boot_details_sql);
-
-if (!$boot_details_result) {
-    echo "Error: " . $conn->error;
-    include 'footer.php';
-    exit;
-}
-
-// Fetch foto_ids associated with the advertentie_id
-$foto_ids_sql = "SELECT foto_id FROM foto_links WHERE advertentie_id = $advertentie_id";
-$foto_ids_result = $conn->query($foto_ids_sql);
-$photo_urls = [];
-
-// Gather all foto_urls based on foto_ids
-if ($foto_ids_result && $foto_ids_result->num_rows > 0) {
-    while ($foto_id = $foto_ids_result->fetch_assoc()) {
-        $foto_url_sql = "SELECT link FROM foto_links WHERE foto_id = " . $foto_id['foto_id'];
-        $foto_url_result = $conn->query($foto_url_sql);
-        if ($foto_url_result && $foto_url_result->num_rows > 0) {
-            while ($foto = $foto_url_result->fetch_assoc()) {
-                $photo_urls[] = $foto['link'];
-            }
-        }
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $boot_naam = $row['boot_naam'];
+        $boot_type = $row['boot_type'];
+        // Fetch other boat details as needed
     }
+
+    // Fetch boat photos using a join to correctly associate them
+    $sql_photos = "SELECT f.link 
+                   FROM foto_links f
+                   JOIN foto_advertenties fa ON fa.foto_id = f.foto_id
+                   WHERE fa.advertentie_id = $advertentie_id";
+    $result_photos = $conn->query($sql_photos);
 }
+
 ?>
 
 <main>
     <div class="container mt-5">
         <div class="row">
-            <!-- Back Button -->
+            <!-- Terug button -->
             <div class="col-md-12 mb-3">
                 <a href="index.php" class="btn btn-secondary">Terug</a>
             </div>
@@ -55,9 +38,9 @@ if ($foto_ids_result && $foto_ids_result->num_rows > 0) {
             <div class="col-md-6">
                 <div class="boat-photos">
                     <?php
-                    if (!empty($photo_urls)) {
-                        foreach ($photo_urls as $url) {
-                            echo "<img src='" . htmlspecialchars($url) . "' class='img-fluid mb-3'>";
+                    if ($result_photos && $result_photos->num_rows > 0) {
+                        while($row_photo = $result_photos->fetch_assoc()) {
+                            echo "<img src='" . $row_photo['link'] . "' class='img-fluid mb-3'>";
                         }
                     } else {
                         echo "<p>Geen foto's beschikbaar.</p>";
@@ -69,16 +52,9 @@ if ($foto_ids_result && $foto_ids_result->num_rows > 0) {
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <?php
-                        if ($boot_details_result->num_rows > 0) {
-                            $row = $boot_details_result->fetch_assoc();
-                            echo "<h3>" . htmlspecialchars($row['boot_naam']) . "</h3>";
-                            echo "<p>Type: " . htmlspecialchars($row['boot_type']) . "</p>";
-                            // Display other boat details as needed
-                        } else {
-                            echo "<p>Bootgegevens niet gevonden.</p>";
-                        }
-                        ?>
+                        <h3><?php echo $boot_naam; ?></h3>
+                        <p>Type: <?php echo $boot_type; ?></p>
+                        <!-- Display other boat details here -->
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-primary btn-block">Reserveer</button>
