@@ -17,10 +17,10 @@ if ($result->num_rows > 0) {
             $photoLink = $photoRow['link'];
             echo '<a href="detail_pagina.php"><div class="boat-image"><img src="' . $photoLink . '" alt="Boat Image"></div></a>'; 
         } else {
-            echo '<a href="detail_pagina.php"><div class="boat-image"><img src="placeholder.png" alt="Boat Image"></div></a>'; 
+            echo '<div class="boat-image"><img src="placeholder.png" alt="Boat Image"></div>'; 
         }
 
-        echo '<a href="detail_pagina.php"><div class="boat-details"></a>';
+        echo '<div class="boat-details">';
         echo '<h2>' . $row["boot_naam"] . '</h2>';
         echo '<p>Type: ' . $row["boot_type"] . '</p>';
         echo '<p>Locatie: ' . $row["locatie"] . '</p>';
