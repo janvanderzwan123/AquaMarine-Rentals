@@ -72,7 +72,7 @@ if ($role === 'verhuurder') {
             <?php endforeach; ?>
         </div>
     <?php else: ?>
-        <h2>Welkom, <?php echo $username; ?>!</h2>
+        <h2>Welkommm, <?php echo $username; ?>!</h2>
         
         <!-- Display user's advertisements -->
         <h3>Jouw advertenties:</h3>
