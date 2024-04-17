@@ -1,5 +1,4 @@
 <?php
-include 'header.php'; 
 include 'database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -7,6 +6,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $gebruikersnaam = $_POST['gebruikersnaam'];
     $emailadres = $_POST['emailadres'];
     $wachtwoord = $_POST['wachtwoord'];
+    $wachtwoord_herhalen = $_POST['wachtwoord_herhalen'];
+
+
+    if ($wachtwoord !== $wachtwoord_herhalen) {
+        echo "<div class='alert alert-danger' role='alert'>Wachtwoorden komen niet overeen.</div>";
+        header("Location: registreren.php");
+        exit();
+    }
 
     $sql = "INSERT INTO gebruikers (gebruikersnaam, emailadres, wachtwoord, rol_id) 
             VALUES ('$gebruikersnaam', '$emailadres', '$wachtwoord', (SELECT rol_id FROM rollen WHERE rol_naam = '$role'))";
@@ -20,6 +27,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $conn->close();
 }
-
-include 'footer.php';
 ?>
