@@ -22,7 +22,6 @@ if(isset($_GET['advertentie_id'])) {
 
 ?>
 
-<main>
     <div class="container mt-5">
         <div class="row">
             <!-- Terug button -->
@@ -59,6 +58,5 @@ if(isset($_GET['advertentie_id'])) {
             </div>
         </div>
     </div>
-</main>
 
 <?php include 'footer.php'; ?>
