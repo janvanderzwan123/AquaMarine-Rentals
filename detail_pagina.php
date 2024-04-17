@@ -1,14 +1,13 @@
 <?php
 include 'header.php'; 
 // Get the advertentie_id from the URL
-echo 'voor if statement voor id get';
 if(isset($_GET['advertentie_id'])) {
     $advertentie_id = $_GET['advertentie_id'];
-    echo 'na get statement';
+
     // Fetch boat details from the database based on advertentie_id
     $sql = "SELECT * FROM advertenties WHERE advertentie_id = $advertentie_id";
     $result = $conn->query($sql);
-    echo 'na advertisemnt ophalen voor detail';
+
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $boot_naam = $row['boot_naam'];
