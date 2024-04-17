@@ -20,7 +20,6 @@
             </div>
         </div>
     </div>
-
     <script>
         // Automatically redirect to login page after 2.5 seconds
         setTimeout(function() {
