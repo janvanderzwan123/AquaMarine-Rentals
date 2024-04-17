@@ -2,15 +2,14 @@
 include 'database.php';
 
 // Initialize filter variables
-$datum = $_GET['datum'] ?? '';
-$locatie = $_GET['locatie'] ?? '';
-$type_boot = $_GET['type-boot'] ?? '';
-$vermogen = $_GET['vermogen'] ?? '';
-$lengte = $_GET['lengte'] ?? '';
-$snelheid = $_GET['snelheid'] ?? '';
-$passagiers = $_GET['passagiers'] ?? '';
+$datum = isset($_GET['datum']) ? $_GET['datum'] : '';
+$locatie = isset($_GET['locatie']) ? $_GET['locatie'] : '';
+$type_boot = isset($_GET['type-boot']) ? $_GET['type-boot'] : '';
+$vermogen = isset($_GET['vermogen']) ? $_GET['vermogen'] : '';
+$lengte = isset($_GET['lengte']) ? $_GET['lengte'] : '';
+$snelheid = isset($_GET['snelheid']) ? $_GET['snelheid'] : '';
+$passagiers = isset($_GET['passagiers']) ? $_GET['passagiers'] : '';
 
-// Build the SQL query based on filter parameters
 $sql = "SELECT * FROM advertenties WHERE 1=1";
 if (!empty($datum)) {
     $sql .= " AND datum = '$datum'";
@@ -33,21 +32,14 @@ if (!empty($snelheid)) {
 if (!empty($passagiers)) {
     $sql .= " AND passagiers = '$passagiers'";
 }
+
 if (isset($_GET['reset'])) {
-    session_unset();
-    session_start();
-    header('Location: ' . $_SERVER['PHP_SELF']);
-    exit;
+    $sql = "SELECT * FROM advertenties";
+    $datum = $locatie = $type_boot = $vermogen = $lengte = $snelheid = $passagiers = '';
 }
-$datum = isset($_SESSION['datum']) ? $_SESSION['datum'] : '';
-$locatie = isset($_SESSION['locatie']) ? $_SESSION['locatie'] : '';
-$typeBoot = isset($_SESSION['type-boot']) ? $_SESSION['type-boot'] : '';
-$vermogen = isset($_SESSION['vermogen']) ? $_SESSION['vermogen'] : '';
-$lengte = isset($_SESSION['lengte']) ? $_SESSION['lengte'] : '';
-$snelheid = isset($_SESSION['snelheid']) ? $_SESSION['snelheid'] : '';
-$passagiers = isset($_SESSION['passagiers']) ? $_SESSION['passagiers'] : '';
 
 $result = $conn->query($sql);
+
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
