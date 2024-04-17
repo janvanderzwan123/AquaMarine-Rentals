@@ -54,25 +54,53 @@ if ($result->num_rows > 0) {
     </div>
 
     <?php if ($role === 'verhuurder'): ?>
-        <h3>Jouw kalender:</h3>
-        <div class="calendar">
-            <div class="header">
-                <h2 id="monthYear">Maand Jaar</h2>
-            </div>
-            <div class="days">
-                <div class="day">Zo</div>
-                <div class="day">Ma</div>
-                <div class="day">Di</div>
-                <div class="day">Wo</div>
-                <div class="day">Do</div>
-                <div class="day">Vr</div>
-                <div class="day">Za</div>
-            </div>
-            <div class="dates" id="dates">
-                <!-- PHP code to generate calendar dates -->
-                <?php include 'generate_calendar.php'; ?>
+        <div class="container mt-5">
+    <h2>Jouw kalender:</h2>
+    <div class="calendar">
+        <div class="header">
+            <div class="month-year">Maand Jaar</div>
+            <div class="days-of-week">
+                <div>Zo</div>
+                <div>Ma</div>
+                <div>Di</div>
+                <div>Wo</div>
+                <div>Do</div>
+                <div>Vr</div>
+                <div>Za</div>
             </div>
         </div>
+        <div class="days">
+            <?php
+            // Get the current month and year
+            $currentMonth = date('n');
+            $currentYear = date('Y');
+
+            // Get the number of days in the current month
+            $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
+
+            // Start the calendar on the first day of the month
+            $startDay = 1;
+
+            // Loop through each day of the month
+            for ($i = 1; $i <= $daysInMonth; $i++) {
+                // Check if it's the first day of the week
+                if ($i === $startDay) {
+                    echo '<div class="week">';
+                }
+
+                // Output the day as a clickable date box
+                echo '<div class="day"><div class="day-box">' . $i . '</div></div>';
+
+                // Check if it's the last day of the week or the last day of the month
+                if (($i % 7 === 0 && $i !== $daysInMonth) || $i === $daysInMonth) {
+                    echo '</div>'; // Close the week div
+                }
+            }
+            ?>
+        </div>
+        <button class="btn btn-primary save-button">Kalender opslaan</button>
+    </div>
+</div>
     <?php endif; ?>
 </div>
 
