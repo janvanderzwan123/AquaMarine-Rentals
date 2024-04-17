@@ -1,4 +1,5 @@
 <?php
+include 'header.php';
 include 'database.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -13,11 +14,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$gebruikersnaam', '$emailadres', '$wachtwoord', (SELECT rol_id FROM rol WHERE rol_naam = '$role'))";
 
     if ($conn->query($sql) === TRUE) {
-        echo "Registration successful!";
+        echo "<div class='alert alert-success' role='alert'>Registratie gelukt!</div>"; // Success message
+        echo "<script>setTimeout(function() { window.location.href = 'index.php'; }, 3000);</script>";
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "<div class='alert alert-danger' role='alert'>Error: " . $sql . "<br>" . $conn->error . "</div>"; // Error message
     }
 
     $conn->close();
 }
+include 'footer.php';
 ?>
