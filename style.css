@@ -12,6 +12,39 @@ body {
     display: flex;
 }
 
+.boat-image {
+    flex: 0 0 100px; /* Fixed width for image */
+    padding: 10px;
+}
+
+.searchBtn {
+    color: #006bb3;
+}
+
+.boat-image img {
+    width: 100%;
+    border-radius: 6px;
+}
+
+.boat-details {
+    flex: 1; /* Take remaining space */
+    padding: 10px;
+}
+
+.boat-details h2 {
+    color: #006bb3; /* Blue heading color */
+}
+
+.boat-details p {
+    color: #333; /* Dark text color */
+}
+
+.boat-calendar {
+    flex: 0 0 40px; /* Fixed width for calendar icon */
+    padding: 10px;
+    text-align: center;
+}
+
 /* Global styles */
 body {
     font-family: 'Pacifico', cursive;
@@ -81,7 +114,7 @@ a.logout-btn {
 }
 
 .boat-image img {
-    width: 350%;
+    width: 300%;
     border-radius: 6px;
 }
 
@@ -96,37 +129,3 @@ a.logout-btn {
     text-align: center;
 }
 
-/* Login form styling */
-.card {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.card-header {
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 8px 8px 0 0;
-}
-
-.card-body {
-    padding: 1.5rem;
-}
-
-.form-group {
-    margin-bottom: 1.5rem;
-}
-
-.form-control {
-    border-radius: 4px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
