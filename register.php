@@ -15,7 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         echo "<div class='alert alert-success' role='alert'>Registratie gelukt!</div>";
         echo "<script>setTimeout(function() { window.location.href = 'index.php'; }, 3000);</script>";
+        echo 'iets';
     } else {
+        echo 'iets';
         echo "<div class='alert alert-danger' role='alert'>Error: " . $sql . "<br>" . $conn->error . "</div>";
     }
 
