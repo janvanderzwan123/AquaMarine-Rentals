@@ -6,7 +6,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo '<a href="detail_pagina.php"><div class="boat-listing">';
+        echo '<a href="detail_pagina.php" style="text-decoration: none;"><div class="boat-listing">';
         
         $photoIdArray = explode(',', $row["photo_id"]);
         $firstPhotoId = $photoIdArray[0];
