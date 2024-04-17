@@ -17,10 +17,11 @@ if(isset($_GET['advertentie_id'])) {
     }
 
     // Fetch boat photos using a join to correctly associate them
-    $sql_photos = "SELECT link 
-                   FROM foto_links
-                   JOIN foto_advertenties ON foto_id = foto_id
-                   WHERE advertentie_id = $advertentie_id";
+    $sql_photos = "SELECT fl.link
+    FROM foto_links fl
+    JOIN foto_id fi ON fl.foto_id = fi.foto_id
+    WHERE fi.advertentie_id = $advertentie_id;
+    ";
     $result_photos = $conn->query($sql_photos);
 }
 
