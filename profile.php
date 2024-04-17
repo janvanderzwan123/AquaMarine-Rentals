@@ -93,11 +93,13 @@ if ($role === 'verhuurder') {
                 <p>Je hebt nog geen advertenties.</p>
             <?php endif; ?>
         </div>
-
+        <?php echo 'voor calendar'; ?>
         <?php if ($role === 'verhuurder'): ?>
             <h3>Jouw kalender:</h3>
             <div id="calendar"></div>
+            <?php echo 'in kalender'; ?>
         <?php endif; ?>
+        <?php echo 'na kalender'; ?>
     <?php endif; ?>
 </div>
 
