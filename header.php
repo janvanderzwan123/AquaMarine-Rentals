@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet"> <!-- Pacifico font -->
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="style.css">
     <style>
         /* Add shadow under header */
         header {

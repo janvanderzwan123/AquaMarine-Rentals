@@ -10,7 +10,7 @@ include 'header.php';
                 <div class="input-group">
                     <input type="text" class="form-control" placeholder="Zoeken...">
                     <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">Zoeken</button>
+                        <button id="searchBtn" class="btn btn-outline-secondary" type="button">Zoeken</button>
                     </div>
                 </div>
             </div>
@@ -20,7 +20,7 @@ include 'header.php';
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h3>jemoeder</h3>
+                        <h3>Filteren</h3>
                         <hr>
                         <form action="#" method="get">
                             <div class="form-group">
