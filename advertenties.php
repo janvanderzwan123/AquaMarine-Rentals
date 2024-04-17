@@ -33,6 +33,10 @@ if (!empty($snelheid)) {
 if (!empty($passagiers)) {
     $sql .= " AND passagiers = '$passagiers'";
 }
+if (isset($_GET['reset'])) {
+    header('Location: ' . $_SERVER['PHP_SELF']);
+    exit;
+}
 
 $result = $conn->query($sql);
 

@@ -56,6 +56,9 @@ include 'header.php';
                                 <input type="number" class="form-control" id="passagiers" name="passagiers">
                             </div>
                             <button type="submit" class="btn btn-primary" name="submit">Filters Toepassen</button>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-danger" name="reset">Filters Resetten</button>
+                            </div>
                         </form>
                     </div>
                 </div>
