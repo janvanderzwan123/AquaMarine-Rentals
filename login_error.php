@@ -15,7 +15,7 @@
                     <p>Sorry, de ingevulde gebruikersnaam, wachtwoord of rol was verkeerd. Probeer opnieuw.</p>
                 </div>
                 <div class="text-center">
-                    <a href="login.php" class="btn btn-primary">Back to Login</a>
+                    <a href="login.php" class="btn btn-primary">Terug naar Login</a>
                 </div>
             </div>
         </div>
