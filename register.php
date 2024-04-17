@@ -10,13 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if ($wachtwoord !== $wachtwoord_herhalen) {
-        echo "<div class='alert alert-danger' role='alert'>Wachtwoorden komen niet overeen.</div>";
-        ?><script>
-            setTimeout(function() {
-            window.location.href = 'registreren.php';
-            }, 2500);
-        </script><?php
-        exit();
+        include 'register_error.php';
     }
 
     $sql = "INSERT INTO gebruikers (gebruikersnaam, emailadres, wachtwoord, rol_id) 
