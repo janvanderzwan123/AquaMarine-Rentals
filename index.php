@@ -1,5 +1,5 @@
-<?php 
-include 'header.php'; 
+<?php
+include 'header.php';
 
 ?>
 
@@ -17,56 +17,56 @@ include 'header.php';
         </div>
         <div class="row">
             <!-- Filter Menu -->
-<div class="col-md-3">
-    <div class="card">
-        <div class="card-body">
-            <h3>Filteren</h3>
-            <hr>
-            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
-                <div class="form-group">
-                    <label for="datum">Datum</label>
-                    <input type="date" class="form-control" id="datum" name="datum" value="<?php echo isset($_GET['datum']) ? htmlspecialchars($_GET['datum']) : ''; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="locatie">Locatie</label>
-                    <input type="text" class="form-control" id="locatie" name="locatie" value="<?php echo isset($_GET['locatie']) ? htmlspecialchars($_GET['locatie']) : ''; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="type-boot">Soort boot</label>
-                    <select class="form-control" id="type-boot" name="type-boot">
-                        <option value="">Kiezen</option>
-                        <option value="Kano" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'kano') ? 'selected' : ''; ?>>Kano</option>
-                        <option value="Motorboot" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'motorboot') ? 'selected' : ''; ?>>Motorboot</option>
-                        <option value="Zeilboot" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'zeilboot') ? 'selected' : ''; ?>>Zeilboot</option>
-                        <option value="Zeilschip" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'zeilschip') ? 'selected' : ''; ?>>Zeilschip</option>
-                        <option value="Kajak" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'kajak') ? 'selected' : ''; ?>>Kajak</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="vermogen">Vermogen</label>
-                    <input type="number" class="form-control" id="vermogen" name="vermogen" value="<?php echo isset($_GET['vermogen']) ? htmlspecialchars($_GET['vermogen']) : ''; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="lengte">Lengte</label>
-                    <input type="number" class="form-control" id="lengte" name="lengte" value="<?php echo isset($_GET['lengte']) ? htmlspecialchars($_GET['lengte']) : ''; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="snelheid">Snelheid</label>
-                    <input type="number" class="form-control" id="snelheid" name="snelheid" value="<?php echo isset($_GET['snelheid']) ? htmlspecialchars($_GET['snelheid']) : ''; ?>">
-                </div>
-                <div class="form-group">
-                    <label for="passagiers">Aantal passagiers</label>
-                    <input type="number" class="form-control" id="passagiers" name="passagiers" value="<?php echo isset($_GET['passagiers']) ? htmlspecialchars($_GET['passagiers']) : ''; ?>">
-                </div>
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary" name="submit">Filters Toepassen</button>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Filteren</h3>
+                        <hr>
+                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+                            <div class="form-group">
+                                <label for="datum">Datum</label>
+                                <input type="date" class="form-control" id="datum" name="datum" value="<?php echo isset($_GET['datum']) ? htmlspecialchars($_GET['datum']) : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="locatie">Locatie</label>
+                                <input type="text" class="form-control" id="locatie" name="locatie" value="<?php echo isset($_GET['locatie']) ? htmlspecialchars($_GET['locatie']) : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="boot_type">Soort boot</label>
+                                <select class="form-control" id="boot_type" name="boot_type">
+                                    <option value="">Kiezen</option>
+                                    <option value="Kano" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'kano') ? 'selected' : ''; ?>>Kano</option>
+                                    <option value="Motorboot" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'motorboot') ? 'selected' : ''; ?>>Motorboot</option>
+                                    <option value="Zeilboot" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'zeilboot') ? 'selected' : ''; ?>>Zeilboot</option>
+                                    <option value="Zeilschip" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'zeilschip') ? 'selected' : ''; ?>>Zeilschip</option>
+                                    <option value="Kajak" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'kajak') ? 'selected' : ''; ?>>Kajak</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="vermogen">Vermogen</label>
+                                <input type="number" class="form-control" id="vermogen" name="vermogen" value="<?php echo isset($_GET['vermogen']) ? htmlspecialchars($_GET['vermogen']) : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="lengte">Lengte</label>
+                                <input type="number" class="form-control" id="lengte" name="lengte" value="<?php echo isset($_GET['lengte']) ? htmlspecialchars($_GET['lengte']) : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="snelheid">Snelheid</label>
+                                <input type="number" class="form-control" id="snelheid" name="snelheid" value="<?php echo isset($_GET['snelheid']) ? htmlspecialchars($_GET['snelheid']) : ''; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="passagiers">Aantal passagiers</label>
+                                <input type="number" class="form-control" id="passagiers" name="passagiers" value="<?php echo isset($_GET['passagiers']) ? htmlspecialchars($_GET['passagiers']) : ''; ?>">
+                            </div>
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary" name="submit">Filters Toepassen</button>
 
-                <!-- Reset button -->
-                <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="btn btn-secondary">Filters Resetten</a>
-            </form>
-        </div>
-    </div>
-</div>
+                            <!-- Reset button -->
+                            <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="btn btn-secondary">Filters Resetten</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <!-- Boat Listings -->
             <div class="col-md-9">
