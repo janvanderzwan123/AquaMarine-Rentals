@@ -173,3 +173,43 @@ a.logout-btn {
 .calendar .days .day .date.marker {
     background-color: #ff9999;
 }
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.month-year {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.days-of-week {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+}
+
+.week {
+    display: flex;
+    justify-content: space-between;
+}
+
+.day {
+    width: calc(100% / 7);
+    padding: 10px 0;
+    text-align: center;
+}
