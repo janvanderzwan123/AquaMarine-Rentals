@@ -1,6 +1,5 @@
 <?php
 include 'header.php'; 
-include 'database.php';
 
 // Get the advertentie_id from the URL
 if(isset($_GET['advertentie_id'])) {
@@ -18,10 +17,10 @@ if(isset($_GET['advertentie_id'])) {
     }
 
     // Fetch boat photos using a join to correctly associate them
-    $sql_photos = "SELECT f.link 
-                   FROM foto_links f
-                   JOIN foto_advertenties fa ON fa.foto_id = f.foto_id
-                   WHERE fa.advertentie_id = $advertentie_id";
+    $sql_photos = "SELECT link 
+                   FROM foto_links
+                   JOIN foto_advertenties ON foto_id = foto_id
+                   WHERE advertentie_id = $advertentie_id";
     $result_photos = $conn->query($sql_photos);
 }
 
