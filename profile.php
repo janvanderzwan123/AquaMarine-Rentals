@@ -34,18 +34,19 @@ if ($result->num_rows > 0) {
     <h2>Welkom, <?php echo $username; ?>!</h2>
     
     <!-- Display user's advertisements -->
+
     <h3>Jouw advertenties:</h3>
     <div class="row">
         <?php if (!empty($advertisements)): ?>
             <?php foreach ($advertisements as $advertisement): ?>
                 <div class="col-md-4">
-                    <a href="detail_pagina.php?advertentie_id='. $row['advertentie_id'] .'" class="card mb-4">
+                    <a href="detail_pagina.php?advertentie_id=<?php echo $advertisement['advertentie_id']; ?>" class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $advertisement["boot_naam"]; ?></h5>
                             <p class="card-text">Type: <?php echo $advertisement["boot_type"]; ?></p>
                             <p class="card-text">Locatie: <?php echo $advertisement["locatie"]; ?></p>
                         </div>
-                    </div></a>
+                    </a>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
