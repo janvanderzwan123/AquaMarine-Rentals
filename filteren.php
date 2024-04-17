@@ -47,17 +47,30 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo '<div class="col-md-4">';
-        echo '<a href="detail_pagina.php?advertentie_id='. $row['advertentie_id'] .'" class="card mb-4">';
-        echo '<div class="card-body">';
-        echo '<h5 class="card-title">' . $row["boot_naam"] . '</h5>';
-        echo '<p class="card-text">Type: ' . $row["boot_type"] . '</p>';
-        echo '<p class="card-text">Locatie: ' . $row["locatie"] . '</p>';
+        echo '<a href="detail_pagina.php?advertentie_id='. $row['advertentie_id'] .'" style="text-decoration: none;"><div class="boat-listing">';
+        
+        $photoIdArray = explode(',', $row["photo_id"]);
+        $firstPhotoId = $photoIdArray[0];
+        $photoSql = "SELECT link FROM foto_links WHERE foto_id = $firstPhotoId LIMIT 1";
+        $photoResult = $conn->query($photoSql);
+        if ($photoResult->num_rows > 0) {
+            $photoRow = $photoResult->fetch_assoc();
+            $photoLink = $photoRow['link'];
+            echo '<div class="boat-image"><img src="' . $photoLink . '" alt="Boat Image"></div>'; 
+        } else {
+            echo '<div class="boat-image"><img src="placeholder.png" alt="Boat Image"></div>'; 
+        }
+
+        echo '<div class="boat-details">';
+        echo '<h2>' . $row["boot_naam"] . '</h2>';
+        echo '<p>Type: ' . $row["boot_type"] . '</p>';
+        echo '<p>Locatie: ' . $row["locatie"] . '</p>';
         echo '</div>';
+        echo '<div class="boat-calendar">Calendar Icon</div>';
         echo '</div></a>';
     }
 } else {
-    echo "<p>Geen advertenties gevonden.</p>";
+    echo "Geen boten gevonden";
 }
 
 $conn->close();

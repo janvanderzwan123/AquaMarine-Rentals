@@ -64,7 +64,6 @@ include 'header.php';
         <!-- Boat Listings -->
         <div class="col-md-9">
             <div class="row">
-                <?php include 'advertenties.php'; ?>
                 <?php include 'filteren.php'; ?>
             </div>
         </div>
