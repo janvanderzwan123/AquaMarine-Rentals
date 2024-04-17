@@ -20,7 +20,7 @@ include 'header.php';
             <div class="col-md-3">
                 <div class="card">
                     <div class="card-body">
-                        <h3>Filteren</h3>
+                        <h3>jemoeder</h3>
                         <hr>
                         <form action="#" method="get">
                             <div class="form-group">
