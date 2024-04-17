@@ -91,6 +91,8 @@ if ($result->num_rows > 0) {
                         // Output the day as a clickable date box
                         echo '<div class="day"><div class="day-box">' . $i . '</div></div>';
 
+                        sleep(5);
+
                         // Check if it's the last day of the week or the last day of the month
                         if (($i % 7 === 0 && $i !== $daysInMonth) || $i === $daysInMonth) {
                             echo '</div><br />'; // Close the week div
