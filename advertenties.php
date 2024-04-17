@@ -4,7 +4,7 @@ include 'database.php';
 // Initialize filter variables
 $datum = isset($_GET['datum']) ? $_GET['datum'] : '';
 $locatie = isset($_GET['locatie']) ? $_GET['locatie'] : '';
-$type_boot = isset($_GET['type-boot']) ? $_GET['type-boot'] : '';
+$type_boot = isset($_GET['boot_type']) ? $_GET['boot_type'] : '';
 $vermogen = isset($_GET['vermogen']) ? $_GET['vermogen'] : '';
 $lengte = isset($_GET['lengte']) ? $_GET['lengte'] : '';
 $snelheid = isset($_GET['snelheid']) ? $_GET['snelheid'] : '';
@@ -18,7 +18,7 @@ if (!empty($locatie)) {
     $sql .= " AND locatie = '$locatie'";
 }
 if (!empty($type_boot)) {
-    $sql .= " AND type_boot = '$type_boot'";
+    $sql .= " AND boot_type = '$type_boot'";
 }
 if (!empty($vermogen)) {
     $sql .= " AND vermogen = '$vermogen'";
