@@ -271,3 +271,17 @@ a.logout-btn {
 .save-button {
     margin-top: 20px;
 }
+
+.profiel-advertentie {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+    text-decoration: none;
+}
+
+.profiel-advertentie:hover {
+    transform: scale(1.05);
+}

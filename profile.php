@@ -39,7 +39,7 @@ if ($result->num_rows > 0) {
     <div class="row">
         <?php if (!empty($advertisements)): ?>
             <?php foreach ($advertisements as $advertisement): ?>
-                <div class="col-md-4">
+                <div id="profiel-advertentie" class="col-md-4">
                     <a href="detail_pagina.php?advertentie_id=<?php echo $advertisement['advertentie_id']; ?>" style="text-decoration: none;" class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $advertisement["boot_naam"]; ?></h5>
