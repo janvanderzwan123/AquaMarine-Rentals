@@ -34,7 +34,7 @@ session_start();
                 </div>
             </div>
             <div class="mt-3">
-                <a href="register.php"><p>Nog geen account?</p></a>
+                <a href="registreren.php"><p>Nog geen account?</p></a>
             </div>
         </div>
     </div>
