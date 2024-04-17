@@ -130,43 +130,46 @@ a.logout-btn {
     position: relative;
 }
 
-.boat-calendar {
-    flex: 0 0 40px; /* Fixed width for calendar icon */
-    padding: 10px;
-    text-align: center;
-}
-
 .calendar {
-    width: 300px;
-    border: 1px solid #ccc;
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.calendar .header {
+    background-color: #f2f2f2;
+}
+
+.calendar .header .month {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.calendar .days {
+    display: flex;
+}
+
+.calendar .days .day {
+    flex: 1;
+    text-align: center;
     padding: 10px;
-    margin: 0 auto;
+    border: 1px solid #ccc;
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+.calendar .days .day:nth-child(odd) {
+    background-color: #f9f9f9;
 }
 
-.days {
-    display: flex;
-    justify-content: space-between;
+.calendar .days .day .date {
+    font-weight: bold;
 }
 
-.day {
-    width: calc(100% / 7);
-    text-align: center;
+.calendar .days .day .date.today {
+    background-color: #ffc;
 }
 
-.dates {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-}
-
-.date {
-    text-align: center;
-    padding: 5px;
+.calendar .days .day .date.marker {
+    background-color: #ff9999;
 }
