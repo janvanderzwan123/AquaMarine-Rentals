@@ -39,13 +39,13 @@ if ($result->num_rows > 0) {
         <?php if (!empty($advertisements)): ?>
             <?php foreach ($advertisements as $advertisement): ?>
                 <div class="col-md-4">
-                    <div class="card mb-4">
+                    <a href="detail_pagina.php?advertentie_id='. $row['advertentie_id'] .'" class="card mb-4">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $advertisement["boot_naam"]; ?></h5>
                             <p class="card-text">Type: <?php echo $advertisement["boot_type"]; ?></p>
                             <p class="card-text">Locatie: <?php echo $advertisement["locatie"]; ?></p>
                         </div>
-                    </div>
+                    </div></a>
                 </div>
             <?php endforeach; ?>
         <?php else: ?>
