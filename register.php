@@ -11,7 +11,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($wachtwoord !== $wachtwoord_herhalen) {
         echo "<div class='alert alert-danger' role='alert'>Wachtwoorden komen niet overeen.</div>";
-        header("Location: registreren.php");
+        ?><script>
+            setTimeout(function() {
+            window.location.href = 'registreren.php';
+            }, 2500);
+        </script><?php
         exit();
     }
 
