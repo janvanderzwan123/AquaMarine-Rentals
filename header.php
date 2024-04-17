@@ -27,7 +27,7 @@
         <div class="container d-flex justify-content-between align-items-center">
             <!-- Logo -->
             <div>
-                <img src="images/amr.png" alt="Logo" style="height: 5rem; margin-left: -6rem;">
+                <img src="/images/amr.png" alt="Logo" style="height: 5rem; margin-left: -6rem;">
             </div>
             <h1 class="m-0">Aqua Marine Rentals</h1>
             <!-- Profile icon with link -->
