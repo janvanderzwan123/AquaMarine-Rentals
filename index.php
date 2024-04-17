@@ -22,18 +22,18 @@ include 'header.php';
                     <div class="card-body">
                         <h3>Filteren</h3>
                         <hr>
-                        <form action="#" method="get">
+                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
                             <div class="form-group">
                                 <label for="datum">Datum</label>
-                                <input type="date" class="form-control" id="datum">
+                                <input type="date" class="form-control" id="datum" name="datum">
                             </div>
                             <div class="form-group">
                                 <label for="locatie">Locatie</label>
-                                <input type="text" class="form-control" id="locatie">
+                                <input type="text" class="form-control" id="locatie" name="locatie">
                             </div>
                             <div class="form-group">
                                 <label for="type-boot">Soort boot</label>
-                                <select class="form-control" id="type-boot">
+                                <select class="form-control" id="type-boot" name="type-boot">
                                     <option value="">Kiezen</option>
                                     <option value="sailing">Zeilboot</option>
                                     <option value="motor">Motorboot</option>
@@ -41,21 +41,21 @@ include 'header.php';
                             </div>
                             <div class="form-group">
                                 <label for="vermogen">Vermogen</label>
-                                <input type="number" class="form-control" id="vermogen">
+                                <input type="number" class="form-control" id="vermogen" name="vermogen">
                             </div>
                             <div class="form-group">
                                 <label for="lengte">Lengte</label>
-                                <input type="number" class="form-control" id="lengte">
+                                <input type="number" class="form-control" id="lengte" name="lengte">
                             </div>
                             <div class="form-group">
                                 <label for="snelheid">Snelheid</label>
-                                <input type="number" class="form-control" id="snelheid">
+                                <input type="number" class="form-control" id="snelheid" name="snelheid">
                             </div>
                             <div class="form-group">
                                 <label for="passagiers">Aantal passagiers</label>
-                                <input type="number" class="form-control" id="passagiers">
+                                <input type="number" class="form-control" id="passagiers" name="passagiers">
                             </div>
-                            <button type="submit" class="btn btn-primary">Filters Toepassen</button>
+                            <button type="submit" class="btn btn-primary" name="submit">Filters Toepassen</button>
                         </form>
                     </div>
                 </div>
