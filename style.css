@@ -136,3 +136,37 @@ a.logout-btn {
     text-align: center;
 }
 
+.calendar {
+    width: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.days {
+    display: flex;
+    justify-content: space-between;
+}
+
+.day {
+    width: calc(100% / 7);
+    text-align: center;
+}
+
+.dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+}
+
+.date {
+    text-align: center;
+    padding: 5px;
+}
