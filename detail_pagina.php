@@ -1,5 +1,7 @@
 <?php
 include 'header.php'; 
+include 'database.php';
+
 // Get the advertentie_id from the URL
 if(isset($_GET['advertentie_id'])) {
     $advertentie_id = $_GET['advertentie_id'];
