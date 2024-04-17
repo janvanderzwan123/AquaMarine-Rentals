@@ -62,7 +62,7 @@ if ($result->num_rows > 0) {
                     <div class="days-of-week">
                         <div>Zo</div>
                         <div>Ma</div>
-                        <div>Di</div><br />
+                        <div>Di</div>
                         <div>Wo</div>
                         <div>Do</div>
                         <div>Vr</div>
@@ -71,31 +71,17 @@ if ($result->num_rows > 0) {
                 </div>
                 <div class="days">
                     <?php
-                    // Get the current month and year
-                    $currentMonth = date('n');
-                    $currentYear = date('Y');
-
-                    // Get the number of days in the current month
-                    $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $currentMonth, $currentYear);
-
-                    // Start the calendar on the first day of the month
-                    $startDay = 1;
-
-                    // Loop through each day of the month
+                    echo '<div class="week">'; // Start the week div
                     for ($i = 1; $i <= $daysInMonth; $i++) {
-                        // Check if it's the first day of the week
-                        if ($i === $startDay) {
-                            echo '<div class="week">';
-                        }
-
                         // Output the day as a clickable date box
                         echo '<div class="day"><div class="day-box">' . $i . '</div></div>';
 
-                        sleep(5);
-
                         // Check if it's the last day of the week or the last day of the month
                         if (($i % 7 === 0 && $i !== $daysInMonth) || $i === $daysInMonth) {
-                            echo '</div><br />'; // Close the week div
+                            echo '</div>'; // Close the week div
+                            if ($i !== $daysInMonth) {
+                                echo '<div class="week">'; // Start a new week
+                            }
                         }
                     }
                     ?>
@@ -105,5 +91,6 @@ if ($result->num_rows > 0) {
         </div>
     <?php endif; ?>
 </div>
+
 
 <?php include 'footer.php'; ?>
