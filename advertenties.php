@@ -39,6 +39,13 @@ if (isset($_GET['reset'])) {
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
 }
+$datum = isset($_SESSION['datum']) ? $_SESSION['datum'] : '';
+$locatie = isset($_SESSION['locatie']) ? $_SESSION['locatie'] : '';
+$typeBoot = isset($_SESSION['type-boot']) ? $_SESSION['type-boot'] : '';
+$vermogen = isset($_SESSION['vermogen']) ? $_SESSION['vermogen'] : '';
+$lengte = isset($_SESSION['lengte']) ? $_SESSION['lengte'] : '';
+$snelheid = isset($_SESSION['snelheid']) ? $_SESSION['snelheid'] : '';
+$passagiers = isset($_SESSION['passagiers']) ? $_SESSION['passagiers'] : '';
 
 $result = $conn->query($sql);
 
