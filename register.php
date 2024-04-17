@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $wachtwoord = $_POST['wachtwoord'];
 
     $sql = "INSERT INTO gebruikers (gebruikersnaam, emailadres, wachtwoord, rol_id) 
-            VALUES ('$gebruikersnaam', '$emailadres', '$wachtwoord', (SELECT rol_id FROM rol WHERE rol_naam = '$role'))";
+            VALUES ('$gebruikersnaam', '$emailadres', '$wachtwoord', (SELECT rol_id FROM rollen WHERE rol_naam = '$role'))";
 
     if ($conn->query($sql) === TRUE) {
         echo "<div class='alert alert-success' role='alert'>Registratie gelukt!</div>";
