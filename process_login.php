@@ -22,5 +22,4 @@ if ($result->num_rows == 1) {
     exit();
 }
 
-$conn->close();
 ?>

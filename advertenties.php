@@ -6,7 +6,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
-        echo '<div class="boat-listing">';
+        echo '<a href="detail_pagina.php"><div class="boat-listing"></a>';
         
         $photoIdArray = explode(',', $row["photo_id"]);
         $firstPhotoId = $photoIdArray[0];
@@ -20,7 +20,7 @@ if ($result->num_rows > 0) {
             echo '<div class="boat-image"><img src="placeholder.png" alt="Boat Image"></div>'; 
         }
 
-        echo '<a href="detail_pagina.php"><div class="boat-details"></a>';
+        echo '<div class="boat-details">';
         echo '<h2>' . $row["boot_naam"] . '</h2>';
         echo '<p>Type: ' . $row["boot_type"] . '</p>';
         echo '<p>Locatie: ' . $row["locatie"] . '</p>';
