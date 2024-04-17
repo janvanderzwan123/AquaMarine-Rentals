@@ -35,8 +35,11 @@ include 'header.php';
                     <label for="type-boot">Soort boot</label>
                     <select class="form-control" id="type-boot" name="type-boot">
                         <option value="">Kiezen</option>
-                        <option value="sailing" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'sailing') ? 'selected' : ''; ?>>Zeilboot</option>
-                        <option value="motor" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'motor') ? 'selected' : ''; ?>>Motorboot</option>
+                        <option value="kano" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'kano') ? 'selected' : ''; ?>>Kano</option>
+                        <option value="motorboot" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'motorboot') ? 'selected' : ''; ?>>Motorboot</option>
+                        <option value="zeilboot" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'zeilboot') ? 'selected' : ''; ?>>Zeilboot</option>
+                        <option value="zeilschip" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'zeilschip') ? 'selected' : ''; ?>>Zeilschip</option>
+                        <option value="kajak" <?php echo (isset($_GET['type-boot']) && $_GET['type-boot'] === 'kajak') ? 'selected' : ''; ?>>Kajak</option>
                     </select>
                 </div>
                 <div class="form-group">
