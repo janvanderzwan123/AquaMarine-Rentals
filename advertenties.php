@@ -28,7 +28,6 @@ if ($result->num_rows > 0) {
         echo '<h2>' . $row["boot_naam"] . '</h2>';
         echo '<p>Type: ' . $row["boot_type"] . '</p>';
         echo '<p>Locatie: ' . $row["locatie"] . '</p>';
-        // Add more details as needed
         echo '</div>';
         echo '<div class="boat-calendar">Calendar Icon</div>'; // Placeholder for calendar icon
         echo '</div>';

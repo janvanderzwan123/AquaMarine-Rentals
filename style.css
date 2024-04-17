@@ -13,7 +13,7 @@ body {
 }
 
 .boat-image {
-    flex: 0 0 100px; /* Fixed width for image */
+    flex: 0 0 25%; /* Fixed width for image */
     padding: 10px;
 }
 
