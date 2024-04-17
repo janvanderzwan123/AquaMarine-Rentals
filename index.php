@@ -5,6 +5,16 @@ include 'header.php';
 
 <main>
     <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Zoeken...">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button">Zoeken</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <!-- Filter Menu -->
             <div class="col-md-3">
