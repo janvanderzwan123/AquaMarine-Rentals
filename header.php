@@ -40,10 +40,12 @@ $loggedInUser = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true;
             <!-- Profile icon with link -->
             <?php if ($loggedInUser): ?>
                 <a href="profile.php" class="text-dark"><i class="far fa-user"></i></a> <!-- Font Awesome profile icon -->
+                <a href="logout.php" class="text-dark ml-3">Uitloggen</a> <!-- Logout button -->
             <?php else: ?>
                 <a href="login.php" class="text-dark"><i class="far fa-user"></i></a> <!-- Redirect to login.php if not logged in -->
             <?php endif; ?>
         </div>
     </header>
 </body>
+
 </html>
