@@ -34,7 +34,7 @@ $loggedInUser = isset($_SESSION['loggedIn']) && $_SESSION['loggedIn'] === true;
         <div class="container d-flex justify-content-between align-items-center">
             <!-- Logo -->
             <div>
-                <img src="/images/AMR.png" alt="Logo" style="height: 5rem; margin-left: -6rem;">
+                <a href="index.php"><img src="/images/AMR.png" alt="Logo" style="height: 5rem; margin-left: -6rem;"></a>
             </div>
             <h1 class="m-0">Aqua Marine Rentals</h1>
             <!-- Profile icon with link -->
