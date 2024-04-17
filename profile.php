@@ -3,24 +3,20 @@ include 'header.php';
 
 session_start();
 
-// Redirect to login if not logged in
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     header("Location: login.php");
     exit();
 }
 
-// Get username and role from session
 $username = $_SESSION['username'];
 $role = $_SESSION['role'];
 
-// Fetch user's advertisements from the database
 $sql = "SELECT a.*
         FROM advertenties a 
         INNER JOIN gebruikers g ON a.verhuurder_id = g.gebruiker_id 
         WHERE g.gebruikersnaam = '$username'";
 $result = $conn->query($sql);
 
-// Check if there are advertisements
 $advertisements = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -32,15 +28,12 @@ if ($result->num_rows > 0) {
 
 <div class="container mt-5">
     <h2>Welkom, <?php echo $username; ?>!</h2>
-    
-    <!-- Display user's advertisements -->
-
     <h3>Jouw advertenties:</h3>
     <div class="row">
         <?php if (!empty($advertisements)): ?>
             <?php foreach ($advertisements as $advertisement): ?>
                 <div id="profiel-advertentie" class="col-md-4">
-                    <a href="detail_pagina.php?advertentie_id=<?php echo $advertisement['advertentie_id']; ?>" style="text-decoration: none;" class="card mb-4">
+                    <a href="detail_pagina.php?advertentie_id=<?php echo $advertisement['advertentie_id']; ?>" style="text-decoration: none;" class="card mb-4 profiel-advertentie">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $advertisement["boot_naam"]; ?></h5>
                             <p class="card-text">Type: <?php echo $advertisement["boot_type"]; ?></p>
@@ -92,6 +85,7 @@ if ($result->num_rows > 0) {
         </div>
     <?php endif; ?>
 </div>
+
 
 
 <?php include 'footer.php'; ?>
