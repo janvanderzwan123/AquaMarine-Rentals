@@ -4,7 +4,7 @@ include 'database.php';
 echo 'begin registrer.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo 'begin if statement.php';
-    $role = $_POST['role'];
+    $role = $_POST['rol_id'];
     $gebruikersnaam = $_POST['gebruikersnaam'];
     $emailadres = $_POST['emailadres'];
     $wachtwoord = $_POST['wachtwoord'];
@@ -13,14 +13,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$gebruikersnaam', '$emailadres', '$wachtwoord', (SELECT rol_id FROM rol WHERE rol_naam = '$role'))";
     echo 'na sql statement';
     echo $conn->query($sql);
-    // if ($conn->query($sql) === TRUE) {
-    //     echo "<div class='alert alert-success' role='alert'>Registratie gelukt!</div>";
-    //     echo "<script>setTimeout(function() { window.location.href = 'index.php'; }, 3000);</script>";
-    //     echo 'iets';
-    // } else {
-    //     echo 'iets';
-    //     echo "<div class='alert alert-danger' role='alert'>Error: " . $sql . "<br>" . $conn->error . "</div>";
-    // }
+    if ($conn->query($sql) === TRUE) {
+        echo "<div class='alert alert-success' role='alert'>Registratie gelukt!</div>";
+        echo "<script>setTimeout(function() { window.location.href = 'index.php'; }, 3000);</script>";
+        echo 'iets';
+    } else {
+        echo 'iets';
+        echo "<div class='alert alert-danger' role='alert'>Error: " . $sql . "<br>" . $conn->error . "</div>";
+    }
 
     $conn->close();
 }
