@@ -2,12 +2,28 @@
 include 'header.php'; 
 include 'database.php';
 
+// Enable error reporting for debugging (remove in production)
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Get the advertentie_id from the URL
 $advertentie_id = isset($_GET['advertentie_id']) ? intval($_GET['advertentie_id']) : 0;
+
+if ($advertentie_id === 0) {
+    echo '<p>Invalid advertentie ID.</p>';
+    include 'footer.php';
+    exit;
+}
 
 // Fetch boat details from the database based on advertentie_id
 $boot_details_sql = "SELECT * FROM advertenties WHERE advertentie_id = $advertentie_id";
 $boot_details_result = $conn->query($boot_details_sql);
+
+if (!$boot_details_result) {
+    echo "Error: " . $conn->error;
+    include 'footer.php';
+    exit;
+}
 
 // Fetch foto_ids associated with the advertentie_id
 $foto_ids_sql = "SELECT foto_id FROM foto_links WHERE advertentie_id = $advertentie_id";
@@ -15,11 +31,11 @@ $foto_ids_result = $conn->query($foto_ids_sql);
 $photo_urls = [];
 
 // Gather all foto_urls based on foto_ids
-if ($foto_ids_result->num_rows > 0) {
+if ($foto_ids_result && $foto_ids_result->num_rows > 0) {
     while ($foto_id = $foto_ids_result->fetch_assoc()) {
         $foto_url_sql = "SELECT link FROM foto_links WHERE foto_id = " . $foto_id['foto_id'];
         $foto_url_result = $conn->query($foto_url_sql);
-        if ($foto_url_result->num_rows > 0) {
+        if ($foto_url_result && $foto_url_result->num_rows > 0) {
             while ($foto = $foto_url_result->fetch_assoc()) {
                 $photo_urls[] = $foto['link'];
             }
@@ -39,7 +55,7 @@ if ($foto_ids_result->num_rows > 0) {
             <div class="col-md-6">
                 <div class="boat-photos">
                     <?php
-                    if (count($photo_urls) > 0) {
+                    if (!empty($photo_urls)) {
                         foreach ($photo_urls as $url) {
                             echo "<img src='" . htmlspecialchars($url) . "' class='img-fluid mb-3'>";
                         }
