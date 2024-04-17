@@ -28,18 +28,6 @@ if ($result->num_rows > 0) {
     }
 }
 
-// Fetch events from the verhuurder's calendar
-$calendarEvents = [];
-if ($role === 'verhuurder') {
-    $sql_calendar = "SELECT * FROM verhuurder_calendar WHERE user_id = (SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = '$username')";
-    $result_calendar = $conn->query($sql_calendar);
-    if ($result_calendar->num_rows > 0) {
-        while ($row = $result_calendar->fetch_assoc()) {
-            $calendarEvents[] = $row;
-        }
-    }
-}
-
 ?>
 
 <div class="container mt-5">
@@ -69,18 +57,16 @@ if ($role === 'verhuurder') {
         <h3>Jouw kalender:</h3>
         <div class="calendar">
             <div class="header">
-                <button onclick="prevMonth()">&lt;</button>
-                <h2 id="monthYear">Month Year</h2>
-                <button onclick="nextMonth()">&gt;</button>
+                <h2 id="monthYear">Maand Jaar</h2>
             </div>
             <div class="days">
-                <div class="day">Sun</div>
-                <div class="day">Mon</div>
-                <div class="day">Tue</div>
-                <div class="day">Wed</div>
-                <div class="day">Thu</div>
-                <div class="day">Fri</div>
-                <div class="day">Sat</div>
+                <div class="day">Zo</div>
+                <div class="day">Ma</div>
+                <div class="day">Di</div>
+                <div class="day">Wo</div>
+                <div class="day">Do</div>
+                <div class="day">Vr</div>
+                <div class="day">Za</div>
             </div>
             <div class="dates" id="dates">
                 <!-- PHP code to generate calendar dates -->
