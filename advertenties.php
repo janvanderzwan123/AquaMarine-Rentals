@@ -34,6 +34,8 @@ if (!empty($passagiers)) {
     $sql .= " AND passagiers = '$passagiers'";
 }
 if (isset($_GET['reset'])) {
+    session_unset();
+    session_start();
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
 }
