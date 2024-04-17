@@ -1,7 +1,39 @@
 <?php
 include 'database.php';
 
-$sql = "SELECT * FROM advertenties";
+// Initialize filter variables
+$datum = $_GET['datum'] ?? '';
+$locatie = $_GET['locatie'] ?? '';
+$type_boot = $_GET['type-boot'] ?? '';
+$vermogen = $_GET['vermogen'] ?? '';
+$lengte = $_GET['lengte'] ?? '';
+$snelheid = $_GET['snelheid'] ?? '';
+$passagiers = $_GET['passagiers'] ?? '';
+
+// Build the SQL query based on filter parameters
+$sql = "SELECT * FROM advertenties WHERE 1=1";
+if (!empty($datum)) {
+    $sql .= " AND datum = '$datum'";
+}
+if (!empty($locatie)) {
+    $sql .= " AND locatie = '$locatie'";
+}
+if (!empty($type_boot)) {
+    $sql .= " AND type_boot = '$type_boot'";
+}
+if (!empty($vermogen)) {
+    $sql .= " AND vermogen = '$vermogen'";
+}
+if (!empty($lengte)) {
+    $sql .= " AND lengte = '$lengte'";
+}
+if (!empty($snelheid)) {
+    $sql .= " AND snelheid = '$snelheid'";
+}
+if (!empty($passagiers)) {
+    $sql .= " AND passagiers = '$passagiers'";
+}
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
