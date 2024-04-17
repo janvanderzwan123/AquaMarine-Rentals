@@ -1,42 +1,50 @@
 <?php
 include 'header.php'; 
+include 'database.php';
+
 // Get the advertentie_id from the URL
-if(isset($_GET['advertentie_id'])) {
-    $advertentie_id = $_GET['advertentie_id'];
+$advertentie_id = isset($_GET['advertentie_id']) ? intval($_GET['advertentie_id']) : 0;
 
-    // Fetch boat details from the database based on advertentie_id
-    $sql = "SELECT * FROM advertenties WHERE advertentie_id = $advertentie_id";
-    $result = $conn->query($sql);
+// Fetch boat details from the database based on advertentie_id
+$boot_details_sql = "SELECT * FROM advertenties WHERE advertentie_id = $advertentie_id";
+$boot_details_result = $conn->query($boot_details_sql);
 
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $boot_naam = $row['boot_naam'];
-        $boot_type = $row['boot_type'];
-        // Fetch other boat details as needed
+// Fetch foto_ids associated with the advertentie_id
+$foto_ids_sql = "SELECT foto_id FROM foto_links WHERE advertentie_id = $advertentie_id";
+$foto_ids_result = $conn->query($foto_ids_sql);
+$photo_urls = [];
+
+// Gather all foto_urls based on foto_ids
+if ($foto_ids_result->num_rows > 0) {
+    while ($foto_id = $foto_ids_result->fetch_assoc()) {
+        $foto_url_sql = "SELECT link FROM foto_links WHERE foto_id = " . $foto_id['foto_id'];
+        $foto_url_result = $conn->query($foto_url_sql);
+        if ($foto_url_result->num_rows > 0) {
+            while ($foto = $foto_url_result->fetch_assoc()) {
+                $photo_urls[] = $foto['link'];
+            }
+        }
     }
-
-    // Fetch boat photos from the database based on advertentie_id
-    $sql_photos = "SELECT link FROM foto_links WHERE advertentie_id = $advertentie_id";
-    $result_photos = $conn->query($sql_photos);
 }
-
 ?>
 
+<main>
     <div class="container mt-5">
         <div class="row">
-            <!-- Terug button -->
+            <!-- Back Button -->
             <div class="col-md-12 mb-3">
                 <a href="index.php" class="btn btn-secondary">Terug</a>
             </div>
             <!-- Boat Photos -->
             <div class="col-md-6">
                 <div class="boat-photos">
-                    <!-- Display boat photos here -->
                     <?php
-                    if ($result_photos->num_rows > 0) {
-                        while($row_photo = $result_photos->fetch_assoc()) {
-                            echo "<img src='" . $row_photo['link'] . "' class='img-fluid mb-3'>";
+                    if (count($photo_urls) > 0) {
+                        foreach ($photo_urls as $url) {
+                            echo "<img src='" . htmlspecialchars($url) . "' class='img-fluid mb-3'>";
                         }
+                    } else {
+                        echo "<p>Geen foto's beschikbaar.</p>";
                     }
                     ?>
                 </div>
@@ -45,18 +53,24 @@ if(isset($_GET['advertentie_id'])) {
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
-                        <!-- Boat Agenda, Contact Info, and Stats -->
-                        <h3><?php echo $boot_naam; ?></h3>
-                        <p>Type: <?php echo $boot_type; ?></p>
-                        <!-- Display other boat details here -->
+                        <?php
+                        if ($boot_details_result->num_rows > 0) {
+                            $row = $boot_details_result->fetch_assoc();
+                            echo "<h3>" . htmlspecialchars($row['boot_naam']) . "</h3>";
+                            echo "<p>Type: " . htmlspecialchars($row['boot_type']) . "</p>";
+                            // Display other boat details as needed
+                        } else {
+                            echo "<p>Bootgegevens niet gevonden.</p>";
+                        }
+                        ?>
                     </div>
                     <div class="card-footer">
-                        <!-- Reserveer Button -->
                         <button class="btn btn-primary btn-block">Reserveer</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</main>
 
 <?php include 'footer.php'; ?>
