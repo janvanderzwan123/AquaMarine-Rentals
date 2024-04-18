@@ -36,44 +36,51 @@ if ($result->num_rows > 0) {
     exit();
 }
 
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if selected dates are submitted
-    if (isset($_POST['selected_dates']) && is_array($_POST['selected_dates'])) {
-        // Prepare the SQL statement to insert or update events in the calendar
-        $insertStmt = $conn->prepare("INSERT INTO verhuurder_calendar (user_id, event_title, start_date, end_date) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE event_title = CASE WHEN event_title = 'Beschikbaar' THEN 'Onbeschikbaar' ELSE 'Beschikbaar' END");
-        $insertStmt->bind_param("isss", $userID, $eventTitle, $startDate, $endDate);
-
-        // Iterate over selected dates and insert or update events in the database
-        foreach ($_POST['selected_dates'] as $date) {
-            // Set start date and end date (assuming events are for the whole day)
-            $startDate = date('Y-m-d', mktime(0, 0, 0, date('n'), $date, date('Y')));
-            $endDate = date('Y-m-d', mktime(0, 0, 0, date('n'), $date, date('Y')));
-
-            // Bind the gebruiker_id to user_id in the verhuurder_calendar table
-            $userID = $gebruikerID;
-
-            // Set event title to Beschikbaar by default (will be toggled if already exists)
-            $eventTitle = 'Beschikbaar';
-
-            // Execute the prepared statement
-            $insertStmt->execute();
-        }
-
-        // Close the prepared statement
-        $insertStmt->close();
-
-        // Redirect back to the profile page after saving
-        header("Location: profile.php");
-        exit();
-    } else {
-        // If no dates are selected, redirect back to the profile page
-        header("Location: profile.php");
-        exit();
-    }
-} else {
-    // If the form is not submitted, redirect back to the profile page
-    header("Location: profile.php");
-    exit();
+// Function to get the number of days in the current month
+function getNumDaysInMonth() {
+    return date('t');
 }
+
+// Function to prepopulate the verhuurder_calendar table with dates marked as "Onbeschikbaar"
+function prepopulateCalendar($conn, $gebruikerID) {
+    // Get the number of days in the current month
+    $numDays = getNumDaysInMonth();
+
+    // Prepare the SQL statement to insert initial entries in the calendar
+    $insertStmt = $conn->prepare("INSERT INTO verhuurder_calendar (user_id, event_title, start_date, end_date) VALUES (?, 'Onbeschikbaar', ?, ?)");
+    $insertStmt->bind_param("iss", $userID, $date, $date);
+
+    // Iterate over each day of the month and insert into the database
+    for ($i = 1; $i <= $numDays; $i++) {
+        // Set the date
+        $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
+
+        // Bind the gebruiker_id to user_id in the verhuurder_calendar table
+        $userID = $gebruikerID;
+
+        // Execute the prepared statement
+        $insertStmt->execute();
+    }
+
+    // Close the prepared statement
+    $insertStmt->close();
+}
+
+// Check if the verhuurder_calendar table is already populated for the current month
+$sql = "SELECT COUNT(*) AS num_events FROM verhuurder_calendar WHERE user_id = ? AND MONTH(start_date) = MONTH(CURRENT_DATE()) AND YEAR(start_date) = YEAR(CURRENT_DATE())";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $gebruikerID);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$numEvents = $row['num_events'];
+
+// If the verhuurder_calendar table is not already populated, prepopulate it
+if ($numEvents == 0) {
+    prepopulateCalendar($conn, $gebruikerID);
+}
+
+// Redirect back to the profile page after prepopulating the calendar
+header("Location: profile.php");
+exit();
 ?>
