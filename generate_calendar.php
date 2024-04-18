@@ -9,20 +9,6 @@ $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
 // Get the first day of the week (1 = Monday, 7 = Sunday)
 $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
 
-// Fetch event titles from the database
-$eventTitles = []; // Placeholder for event titles
-
-// SQL statement to fetch event titles
-// Replace 'your_condition_here' with your specific condition
-$sql = "SELECT event_title FROM verhuurder_calendar WHERE your_condition_here";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $eventTitles[] = $row['event_title'];
-    }
-}
-
 // Start generating HTML
 $html = '<form action="save_calendar.php" method="post"><div class="calendar">';
 
@@ -36,7 +22,7 @@ for ($i = 1; $i <= $numDays; $i++) {
     if ($i == 1) {
         for ($j = 1; $j < $firstDayOfWeek; $j++) {
             // Add the day-box with appropriate ID based on event_title
-            if (isset($eventTitles[$i]) && $eventTitles[$i] === 'Beschikbaar') {
+            if ($eventTitle[$i] === 'Beschikbaar') {
                 $html .= '<div id="day-box" class="date"></div>';
             } else {
                 $html .= '<div id="selected" class="date"></div>';
