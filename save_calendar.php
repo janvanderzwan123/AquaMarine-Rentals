@@ -11,8 +11,13 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
 // Include the database connection
 include 'database.php';
 
-// Get the user ID from the session
-$userID = $_SESSION['userID'];
+// Get the gebruikers_id of the current user from the session
+if (!isset($_SESSION['gebruikers_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$gebruikersID = $_SESSION['gebruikers_id'];
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,6 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set start date and end date (assuming events are for the whole day)
             $startDate = date('Y-m-d', mktime(0, 0, 0, date('n'), $date, date('Y')));
             $endDate = date('Y-m-d', mktime(0, 0, 0, date('n'), $date, date('Y')));
+
+            // Bind the gebruikers_id to user_id in the verhuurder_calendar table
+            $userID = $gebruikersID;
 
             // Execute the prepared statement
             $insertStmt->execute();
