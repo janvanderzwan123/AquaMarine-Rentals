@@ -84,7 +84,7 @@ if ($result->num_rows > 0) {
                 </div>
                 <button class="btn btn-primary save-button">Kalender opslaan</button>
             </div>
-        </div>
+        </div><br><br>
     <?php endif; ?>
 </div>
 
