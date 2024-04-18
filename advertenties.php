@@ -62,12 +62,7 @@ if ($result->num_rows > 0) {
         echo '<p>Locatie: ' . $row["locatie"] . '</p>';
         echo '<p>Prijs per dag: €' . $row["prijs_per_dag"] . '</p>';
         echo '</div>';
-        echo '<div class="boat-calendar">';
-        ob_start();
-        include "generate_calendar.php";
-        $content = ob_get_clean();
-        echo $content;
-        echo '</div>';
+        echo '<div class="boat-calendar"><?php include "generate_calendar.php";?></div>';
         echo '</div></a>';
     }
 } else {
