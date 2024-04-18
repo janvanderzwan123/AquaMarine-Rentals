@@ -26,6 +26,7 @@ for ($i = 1; $i <= $numDays; $i++) {
                 $html .= '<div style="background-color: green;" class="date"></div>';
             } else {
                 $html .= '<div style="background-color: red;" class="date"></div>';
+                echo $eventTitle[$i];
             }
         }
     }
@@ -42,10 +43,8 @@ for ($i = 1; $i <= $numDays; $i++) {
         $html .= '</div>';
     }
 }
-echo $eventTitle[$i];
-// Close the calendar form
+
 $html .= '</div><button type="submit" class="btn btn-primary save-button">Kalender opslaan</button></form>';
 
-// Output the generated HTML
 echo $html;
 ?>
