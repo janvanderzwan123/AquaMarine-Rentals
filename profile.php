@@ -62,7 +62,6 @@ if ($result->num_rows > 0) {
                     include 'generate_calendar.php';
                     ?>
                 </div>
-                <button class="btn btn-primary save-button">Kalender opslaan</button>
             </div>
         </div><br><br>
     <?php endif; ?>
