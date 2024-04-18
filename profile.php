@@ -55,7 +55,7 @@ if ($result->num_rows > 0) {
             <h2>Jouw kalender:</h2>
             <div class="calendar">
                 <div class="header">
-                    <div class="month">Maand: $currentMonth</div>
+                    <div class="month">Maand: <?php $currentMonth ?></div>
                 </div>
                 <div class="days">
                     <?php
