@@ -17,8 +17,7 @@ $sql = "SELECT a.*
         WHERE g.gebruikersnaam = '$username'";
 $result = $conn->query($sql);
 
-$currentMonth = date("M");
-echo $currentMonth;
+$currentMonth = date("F");
 
 $advertisements = [];
 if ($result->num_rows > 0) {
