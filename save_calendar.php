@@ -41,46 +41,44 @@ function getNumDaysInMonth() {
     return date('t');
 }
 
-// Function to prepopulate the verhuurder_calendar table with dates marked as "Onbeschikbaar"
-function prepopulateCalendar($conn, $gebruikerID) {
-    // Get the number of days in the current month
-    $numDays = getNumDaysInMonth();
-
-    // Prepare the SQL statement to insert initial entries in the calendar
-    $insertStmt = $conn->prepare("INSERT INTO verhuurder_calendar (user_id, event_title, start_date, end_date) VALUES (?, 'Onbeschikbaar', ?, ?)");
-    $insertStmt->bind_param("iss", $userID, $date, $date);
-
-    // Iterate over each day of the month and insert into the database
-    for ($i = 1; $i <= $numDays; $i++) {
-        // Set the date
-        $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
-
-        // Bind the gebruiker_id to user_id in the verhuurder_calendar table
-        $userID = $gebruikerID;
-
-        // Execute the prepared statement
-        $insertStmt->execute();
+// Function to retrieve the user's calendar events for the current month
+function getUserCalendarEvents($conn, $gebruikerID) {
+    $sql = "SELECT start_date, event_title FROM verhuurder_calendar WHERE user_id = ? AND MONTH(start_date) = MONTH(CURRENT_DATE()) AND YEAR(start_date) = YEAR(CURRENT_DATE())";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $gebruikerID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $events = [];
+    while ($row = $result->fetch_assoc()) {
+        $events[$row['start_date']] = $row['event_title'];
     }
-
-    // Close the prepared statement
-    $insertStmt->close();
+    return $events;
 }
 
-// Check if the verhuurder_calendar table is already populated for the current month
-$sql = "SELECT COUNT(*) AS num_events FROM verhuurder_calendar WHERE user_id = ? AND MONTH(start_date) = MONTH(CURRENT_DATE()) AND YEAR(start_date) = YEAR(CURRENT_DATE())";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $gebruikerID);
-$stmt->execute();
-$result = $stmt->get_result();
-$row = $result->fetch_assoc();
-$numEvents = $row['num_events'];
+// Retrieve the calendar events for the current user and month
+$calendarEvents = getUserCalendarEvents($conn, $gebruikerID);
 
-// If the verhuurder_calendar table is not already populated, prepopulate it
-if ($numEvents == 0) {
-    prepopulateCalendar($conn, $gebruikerID);
+// Get the number of days in the current month
+$numDays = getNumDaysInMonth();
+
+// Loop through each day of the month
+for ($i = 1; $i <= $numDays; $i++) {
+    // Set the date
+    $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
+    
+    // Check if the day-box was submitted
+    if (isset($_POST['selected_dates']) && in_array($i, $_POST['selected_dates'])) {
+        // Toggle the event_title between "Beschikbaar" and "Onbeschikbaar"
+        $eventTitle = ($calendarEvents[$date] === 'Beschikbaar') ? 'Onbeschikbaar' : 'Beschikbaar';
+        // Update the event_title in the database
+        $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE user_id = ? AND start_date = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sis", $eventTitle, $gebruikerID, $date);
+        $stmt->execute();
+    }
 }
 
-// Redirect back to the profile page after prepopulating the calendar
+// Redirect back to the profile page after processing the calendar updates
 header("Location: profile.php");
 exit();
 ?>
