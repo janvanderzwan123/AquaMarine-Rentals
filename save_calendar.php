@@ -12,12 +12,12 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
 include 'database.php';
 
 // Get the gebruikers_id of the current user from the session
-if (!isset($_SESSION['gebruikers_id'])) {
+if (!isset($_SESSION['gebruiker_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$gebruikersID = $_SESSION['gebruikers_id'];
+$gebruikersID = $_SESSION['gebruiker_id'];
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
