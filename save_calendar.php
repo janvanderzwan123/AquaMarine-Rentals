@@ -1,4 +1,5 @@
 <?php
+// Start the session
 session_start();
 
 // Check if the user is logged in
@@ -7,46 +8,77 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     exit();
 }
 
-// Get the username from the session
-$username = $_SESSION['username'];
+// Include the database connection
+include 'database.php';
 
-// Your database connection code here
-
-// Get the gebruiker_id for the current user
-$sql = "SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = '$username'";
-$result = $conn->query($sql);
-
-// Check if the query was successful
-if ($result->num_rows > 0) {
-    // Fetch the row to get the gebruiker_id
-    $row = $result->fetch_assoc();
-    $gebruiker_id = $row['gebruiker_id'];
-} else {
-    // Handle the case where the user is not found
-    // You may redirect the user or show an error message
-    exit("User not found");
-}
-
-// Check if the form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get the selected dates from the form
-    $selectedDates = $_POST['selected_dates'];
-
-    // Update the event titles in the database
-    foreach ($selectedDates as $date) {
-        // Check if the date should be beschikbaar or onbeschikbaar
-        $eventTitle = ($_POST['event_title_' . $date] === 'Beschikbaar') ? 'Beschikbaar' : 'onbeschikbaar';
-
-        // Prepare and execute the SQL statement to update the event title
-        $sql = "UPDATE verhuurder_calendar SET event_title = '$eventTitle' WHERE start_date = '$year-$month-$date' AND user_id = '$gebruiker_id'";
-        $conn->query($sql);
-    }
-
-    // Redirect back to the calendar page
-    header("Location: calendar.php");
+// Get the username of the current user from the session
+if (!isset($_SESSION['username'])) {
+    header("Location: login.php");
     exit();
 }
 
-// Close database connection
-$conn->close();
+$username = $_SESSION['username'];
+
+// Retrieve the gebruiker_id based on the username
+$sql = "SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Check if the username exists
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $gebruikerID = $row['gebruiker_id'];
+} else {
+    // Redirect if the username is not found
+    header("Location: login.php");
+    exit();
+}
+
+// Function to get the number of days in the current month
+function getNumDaysInMonth() {
+    return date('t');
+}
+
+// Function to retrieve the user's calendar events for the current month
+function getUserCalendarEvents($conn, $gebruikerID) {
+    $sql = "SELECT start_date, event_title FROM verhuurder_calendar WHERE user_id = ? AND MONTH(start_date) = MONTH(CURRENT_DATE()) AND YEAR(start_date) = YEAR(CURRENT_DATE())";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $gebruikerID);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $events = [];
+    while ($row = $result->fetch_assoc()) {
+        $events[$row['start_date']] = $row['event_title'];
+    }
+    return $events;
+}
+
+// Retrieve the calendar events for the current user and month
+$calendarEvents = getUserCalendarEvents($conn, $gebruikerID);
+
+// Get the number of days in the current month
+$numDays = getNumDaysInMonth();
+
+// Loop through each day of the month
+for ($i = 1; $i <= $numDays; $i++) {
+    // Set the date
+    $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
+    
+    // Check if the day-box was submitted
+    if (isset($_POST['selected_dates']) && in_array($i, $_POST['selected_dates'])) {
+        // Toggle the event_title between "Beschikbaar" and "Onbeschikbaar"
+        $eventTitle = ($calendarEvents[$date] === 'Beschikbaar') ? 'Onbeschikbaar' : 'Beschikbaar';
+        // Update the event_title in the database
+        $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE user_id = ? AND start_date = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sis", $eventTitle, $gebruikerID, $date);
+        $stmt->execute();
+    }
+}
+
+// Redirect back to the profile page after processing the calendar updates
+header("Location: profile.php");
+exit();
 ?>
