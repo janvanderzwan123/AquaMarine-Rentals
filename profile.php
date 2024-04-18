@@ -18,6 +18,7 @@ $sql = "SELECT a.*
 $result = $conn->query($sql);
 
 $currentMonth = date("M");
+echo $currentMonth;
 
 $advertisements = [];
 if ($result->num_rows > 0) {
