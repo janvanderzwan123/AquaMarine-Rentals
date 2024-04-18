@@ -53,16 +53,7 @@ if ($result->num_rows > 0) {
             <h2>Jouw kalender:</h2>
             <div class="calendar">
                 <div class="header">
-                    <div class="month-year">Maand Jaar</div>
-                    <div class="days-of-week">
-                        <div>Zo</div>
-                        <div>Ma</div>
-                        <div>Di</div>
-                        <div>Wo</div>
-                        <div>Do</div>
-                        <div>Vr</div>
-                        <div>Za</div>
-                    </div>
+                    <div class="month">Maand</div>
                 </div>
                 <div class="days">
                     <?php
