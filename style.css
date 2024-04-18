@@ -172,11 +172,8 @@ a.logout-btn {
 }
 
 .day-box {
-    width: 30px;
-    height: 30px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    line-height: 30px;
+    background-color: green;
+    color: white;
 }
 
 .selected {
