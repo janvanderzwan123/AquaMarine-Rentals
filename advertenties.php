@@ -68,7 +68,6 @@ if ($result->num_rows > 0) {
         $content = ob_get_clean();
         echo $content;
         echo '</div>';
-        ?>
         echo '</div></a>';
     }
 } else {
