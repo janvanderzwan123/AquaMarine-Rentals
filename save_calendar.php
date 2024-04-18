@@ -11,13 +11,30 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
 // Include the database connection
 include 'database.php';
 
-// Get the gebruikers_id of the current user from the session
-if (!isset($_SESSION['gebruiker_id'])) {
+// Get the username of the current user from the session
+if (!isset($_SESSION['username'])) {
     header("Location: login.php");
     exit();
 }
 
-$gebruikersID = $_SESSION['gebruiker_id'];
+$username = $_SESSION['username'];
+
+// Retrieve the gebruiker_id based on the username
+$sql = "SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Check if the username exists
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $gebruikerID = $row['gebruiker_id'];
+} else {
+    // Redirect if the username is not found
+    header("Location: login.php");
+    exit();
+}
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -30,32 +47,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Set event title
         $eventTitle = "Beschikbaar";
 
-        // Iterate over selected dates and insert or update events in the database
         foreach ($_POST['selected_dates'] as $date) {
-            // Set start date and end date (assuming events are for the whole day)
             $startDate = date('Y-m-d', mktime(0, 0, 0, date('n'), $date, date('Y')));
             $endDate = date('Y-m-d', mktime(0, 0, 0, date('n'), $date, date('Y')));
 
-            // Bind the gebruikers_id to user_id in the verhuurder_calendar table
-            $userID = $gebruikersID;
+            $userID = $gebruikerID;
 
-            // Execute the prepared statement
             $insertStmt->execute();
         }
 
-        // Close the prepared statement
         $insertStmt->close();
 
-        // Redirect back to the profile page after saving
         header("Location: profile.php");
         exit();
     } else {
-        // If no dates are selected, redirect back to the profile page
         header("Location: profile.php");
         exit();
     }
 } else {
-    // If the form is not submitted, redirect back to the profile page
     header("Location: profile.php");
     exit();
 }
