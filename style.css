@@ -201,3 +201,21 @@ a.logout-btn {
 .profiel-advertentie:hover {
     transform: scale(1.05);
 }
+
+.calendar {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.calendar label {
+    border: 1px solid #ccc;
+    width: calc(100% / 7);
+    box-sizing: border-box;
+    text-align: center;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.calendar label.selected {
+    background-color: lightblue;
+}
