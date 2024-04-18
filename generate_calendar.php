@@ -21,7 +21,12 @@ for ($i = 1; $i <= $numDays; $i++) {
     // Add empty date boxes for days before the first day of the month
     if ($i == 1) {
         for ($j = 1; $j < $firstDayOfWeek; $j++) {
-            $html .= '<div id="day-box" class="date"></div>';
+            // Add the day-box with appropriate ID based on event_title
+            if ($eventTitle[$i] === 'Beschikbaar') {
+                $html .= '<div id="day-box" class="date"></div>';
+            } else {
+                $html .= '<div id="selected" class="date"></div>';
+            }
         }
     }
 
