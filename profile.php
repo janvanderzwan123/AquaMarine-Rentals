@@ -17,6 +17,8 @@ $sql = "SELECT a.*
         WHERE g.gebruikersnaam = '$username'";
 $result = $conn->query($sql);
 
+$currentMonth = date("M");
+
 $advertisements = [];
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
@@ -53,7 +55,7 @@ if ($result->num_rows > 0) {
             <h2>Jouw kalender:</h2>
             <div class="calendar">
                 <div class="header">
-                    <div class="month">Maand</div>
+                    <div class="month">Maand: $currentMonth</div>
                 </div>
                 <div class="days">
                     <?php
