@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group">
                             <label for="lengte">Lengte (meters)</label>
-                            <input type="number" class="form-control" id="lengte" name="lengte" placeholder="Enter length in meters" required>
+                            <input type="number" class="form-control" id="lengte" name="lengte">
                         </div>
                         <div class="form-group">
                             <label for="prijs_per_dag">Prijs per dag (€):</label>
