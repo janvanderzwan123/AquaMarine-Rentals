@@ -68,11 +68,12 @@ for ($i = 1; $i <= $numDays; $i++) {
     
     // Check if the day-box was submitted
     if (isset($_POST['selected_dates']) && in_array($i, $_POST['selected_dates'])) {
-        // Update the event_title in the database based on checkbox status
-        $eventTitle = isset($calendarEvents[$date]) && $calendarEvents[$date] === 'Beschikbaar' ? 'Beschikbaar' : 'Onbeschikbaar';
-        $sql = "INSERT INTO verhuurder_calendar (user_id, start_date, event_title) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE event_title = VALUES(event_title)";
+        // Toggle the event_title between "Beschikbaar" and "Onbeschikbaar"
+        $eventTitle = ($calendarEvents[$date] === 'Beschikbaar') ? 'Onbeschikbaar' : 'Beschikbaar';
+        // Update the event_title in the database
+        $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE user_id = ? AND start_date = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("iss", $gebruikerID, $date, $eventTitle);
+        $stmt->bind_param("sis", $eventTitle, $gebruikerID, $date);
         $stmt->execute();
     }
 }
