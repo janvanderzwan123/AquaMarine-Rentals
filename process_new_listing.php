@@ -1,52 +1,48 @@
 <?php
-include 'database.php'; // Make sure your database connection is correctly set up
+include 'database.php';  // Make sure your database connection file is correctly included
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Get form data with added escaping for security
-    $boot_naam = $conn->real_escape_string($_POST['boot_naam']);
-    $boot_type = $conn->real_escape_string($_POST['boot_type']);
-    $locatie = $conn->real_escape_string($_POST['locatie']);
-    $vermogen = $conn->real_escape_string($_POST['vermogen']);
-    $lengte = $conn->real_escape_string($_POST['lengte']);
-    $prijs_per_dag = $conn->real_escape_string($_POST['prijs_per_dag']);
+    // Get form data
+    $boot_naam = $_POST['boot_naam'];
+    $boot_type = $_POST['boot_type'];
+    $locatie = $_POST['locatie'];
+    $vermogen = $_POST['vermogen'];
+    $prijs_per_dag = $_POST['prijs_per_dag'];
+    $lengte = $_POST['lengte'];
+    $snelheid = $_POST['snelheid'];
+    $aantal_passagiers = $_POST['aantal_passagiers'];
+    $verhuurder_id = $_POST['verhuurder_id'];  // Assuming this comes from the form or session
 
     // Prepare SQL statement to insert advertisement data
-    $stmt = $conn->prepare("INSERT INTO advertenties (boot_naam, boot_type, locatie, vermogen, lengte, prijs_per_dag) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssiid", $boot_naam, $boot_type, $locatie, $vermogen, $lengte, $prijs_per_dag);
+    $sql = "INSERT INTO advertenties (boot_naam, boot_type, locatie, vermogen, prijs_per_dag, lengte, snelheid, aantal_passagiers, verhuurder_id) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
+    // Prepare statement
+    $stmt = $conn->prepare($sql);
+    // Bind parameters
+    $stmt->bind_param("sssiiiiii", $boot_naam, $boot_type, $locatie, $vermogen, $prijs_per_dag, $lengte, $snelheid, $aantal_passagiers, $verhuurder_id);
+    
     // Execute SQL statement
     if ($stmt->execute()) {
         // Get the ID of the newly inserted advertisement
-        $advertentie_id = $conn->insert_id;
+        $advertentie_id = $stmt->insert_id;
 
         // Handle photo uploads
-        if (!empty($_FILES['photos']['name'][0])) {
-            $target_dir = "images/";
-            foreach ($_FILES['photos']['tmp_name'] as $key => $tmp_name) {
-                $file_name = $_FILES['photos']['name'][$key];
-                $file_tmp = $_FILES['photos']['tmp_name'][$key];
-                $newFilePath = $target_dir . basename($file_name);
-                if (move_uploaded_file($file_tmp, $newFilePath)) {
-                    // Insert photo link into foto_links after uploading
-                    $photoSql = $conn->prepare("INSERT INTO foto_links (foto_id, link) VALUES (?, ?)");
-                    $photoSql->bind_param("is", $advertentie_id, $newFilePath);
-                    $photoSql->execute();
-                }
-            }
-        }
+        // Assuming you have a file input for photos, and photo processing code is separate
+        include 'handle_photo_upload.php';  // This script should handle file uploads and linking to the ad
 
         // Redirect to profile.php after successful submission
         header("Location: profile.php");
-        exit();
+        exit;
     } else {
         echo "Error: " . $stmt->error;
     }
-} else {
-    echo "Invalid Request";
+
+    // Close statement
+    $stmt->close();
 }
 
-// Close database connection and statement
-$stmt->close();
+// Close database connection
 $conn->close();
 ?>

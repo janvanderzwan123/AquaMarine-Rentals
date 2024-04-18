@@ -35,6 +35,14 @@
                             <input type="number" class="form-control" id="lengte" name="lengte">
                         </div>
                         <div class="form-group">
+                            <label for="snelheid">Snelheid (km/h):</label>
+                            <input type="number" class="form-control" id="snelheid" name="snelheid" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="aantal_passagiers">Aantal Passagiers:</label>
+                            <input type="number" class="form-control" id="aantal_passagiers" name="aantal_passagiers" required>
+                        </div>
+                        <div class="form-group">
                             <label for="prijs_per_dag">Prijs per dag (€):</label>
                             <input type="number" class="form-control" id="prijs_per_dag" name="prijs_per_dag" required>
                         </div>
