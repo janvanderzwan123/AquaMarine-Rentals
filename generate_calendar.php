@@ -19,7 +19,7 @@ for ($i = 1; $i <= $numDays; $i++) {
         }
     }
 
-    $html .= '<div class="date">' . $i . '</div>';
+    $html .= '<div id="day-box" class="date">' . $i . '</div>';
 
     if ($i == $numDays || ($i + $firstDayOfWeek - 1) % 7 == 0) {
         $html .= '</div>';
