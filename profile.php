@@ -66,19 +66,19 @@ if ($result->num_rows > 0) {
                 </div>
                 <div class="days">
                     <?php
-                    echo '<div class="week">'; // Start the week div
-                    for ($i = 1; $i <= $daysInMonth; $i++) {
-                        // Output the day as a clickable date box
-                        echo '<div class="day"><div class="day-box">' . $i . '</div></div>';
+                    // echo '<div class="week">'; // Start the week div
+                    // for ($i = 1; $i <= $daysInMonth; $i++) {
+                    //     // Output the day as a clickable date box
+                    //     echo '<div class="day"><div class="day-box">' . $i . '</div></div>';
 
-                        // Check if it's the last day of the week or the last day of the month
-                        if (($i % 7 === 0 && $i !== $daysInMonth) || $i === $daysInMonth) {
-                            echo '</div>'; // Close the week div
-                            if ($i !== $daysInMonth) {
-                                echo '<div class="week">'; // Start a new week
-                            }
-                        }
-                    }
+                    //     // Check if it's the last day of the week or the last day of the month
+                    //     if (($i % 7 === 0 && $i !== $daysInMonth) || $i === $daysInMonth) {
+                    //         echo '</div>'; // Close the week div
+                    //         if ($i !== $daysInMonth) {
+                    //             echo '<div class="week">'; // Start a new week
+                    //         }
+                    //     }
+                    // }
                     include 'generate_calendar.php';
                     ?>
                 </div>
