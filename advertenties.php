@@ -9,6 +9,7 @@ $vermogen = isset($_GET['vermogen']) ? $_GET['vermogen'] : '';
 $lengte = isset($_GET['lengte']) ? $_GET['lengte'] : '';
 $snelheid = isset($_GET['snelheid']) ? $_GET['snelheid'] : '';
 $passagiers = isset($_GET['passagiers']) ? $_GET['passagiers'] : '';
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
 $sql = "SELECT * FROM advertenties WHERE 1=1";
 if (!empty($datum)) {
@@ -32,10 +33,8 @@ if (!empty($snelheid)) {
 if (!empty($passagiers)) {
     $sql .= " AND passagiers = '$passagiers'";
 }
-
-if (isset($_GET['reset'])) {
-    $sql = "SELECT * FROM advertenties";
-    $datum = $locatie = $type_boot = $vermogen = $lengte = $snelheid = $passagiers = '';
+if (!empty($search)) {
+    $sql .= " AND (boot_naam LIKE '%$search%' OR boot_type LIKE '%$search%' OR locatie LIKE '%$search%')";
 }
 
 $result = $conn->query($sql);

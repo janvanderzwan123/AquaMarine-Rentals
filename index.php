@@ -7,12 +7,15 @@ include 'header.php';
     <div class="container">
         <div class="row mb-4">
             <div class="col-md-12">
+            <form action="index.php" method="GET">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Zoeken...">
-                    <div class="input-group-append">
-                        <button id="searchBtn" class="btn btn-outline-secondary" type="button">Zoeken</button>
-                    </div>
-                </div>
+                    <input type="text" class="form-control" name="search" placeholder="Zoeken...">
+                <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Zoeken</button>
+        </div>
+    </div>
+</form>
+
             </div>
         </div>
         <div class="row">
