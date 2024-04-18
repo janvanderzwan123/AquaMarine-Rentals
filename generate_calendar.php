@@ -23,9 +23,9 @@ for ($i = 1; $i <= $numDays; $i++) {
         for ($j = 1; $j < $firstDayOfWeek; $j++) {
             // Add the day-box with appropriate ID based on event_title
             if ($eventTitle[$i] === 'Beschikbaar') {
-                $html .= '<div id="day-box" class="date"></div>';
+                $html .= '<div style="background-color: green;" class="date"></div>';
             } else {
-                $html .= '<div id="selected" class="date"></div>';
+                $html .= '<div style="background-color: red;" class="date"></div>';
             }
         }
     }
