@@ -35,13 +35,13 @@ include 'header.php';
                             </div>
                             <div class="form-group">
                                 <label for="boot_type">Soort boot</label>
-                                <select class="form-control" id="boot_type" name="boot_type">
-                                    <option value="">Kiezen</option>
-                                    <option value="Kano" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'kano') ? 'selected' : ''; ?>>Kano</option>
-                                    <option value="Motorboot" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'motorboot') ? 'selected' : ''; ?>>Motorboot</option>
-                                    <option value="Zeilboot" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'zeilboot') ? 'selected' : ''; ?>>Zeilboot</option>
-                                    <option value="Zeilschip" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'zeilschip') ? 'selected' : ''; ?>>Zeilschip</option>
-                                    <option value="Kajak" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'kajak') ? 'selected' : ''; ?>>Kajak</option>
+                                <select class="form-control" id="boot_type" name="boot_type" required>
+                                    <option value="">Selecteer type...</option>
+                                    <option value="Kano" <?php echo (isset($_POST['boot_type']) && $_POST['boot_type'] === 'Kano') ? 'selected' : ''; ?>>Kano</option>
+                                    <option value="Motorboot" <?php echo (isset($_POST['boot_type']) && $_POST['boot_type'] === 'Motorboot') ? 'selected' : ''; ?>>Motorboot</option>
+                                    <option value="Zeilboot" <?php echo (isset($_POST['boot_type']) && $_POST['boot_type'] === 'Zeilboot') ? 'selected' : ''; ?>>Zeilboot</option>
+                                    <option value="Zeilschip" <?php echo (isset($_POST['boot_type']) && $_POST['boot_type'] === 'Zeilschip') ? 'selected' : ''; ?>>Zeilschip</option>
+                                    <option value="Kajak" <?php echo (isset($_POST['boot_type']) && $_POST['boot_type'] === 'Kajak') ? 'selected' : ''; ?>>Kajak</option>
                                 </select>
                             </div>
                             <div class="form-group">
