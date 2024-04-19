@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
         echo '<div class="boat-calendar">';
 
         $gebruiker_id = $row['gebruiker_id'];
-        include 'display_calendar.php';
+        include_once 'display_calendar.php';
         echo '</div>';
         
         echo '</div></a>';
