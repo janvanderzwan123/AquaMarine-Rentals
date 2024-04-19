@@ -26,7 +26,7 @@ $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
 
 for ($i = 1; $i <= $numDays; $i++) {
     $date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
-    $sql = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE (user_id = ? OR user_id IS NULL) AND start_date = ?";
+    $sql = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE user_id = ? AND start_date = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("is", $gebruikerID, $date);
     $stmt->execute();
@@ -42,8 +42,6 @@ for ($i = 1; $i <= $numDays; $i++) {
         $stmt->execute();
     }
 }
-
-
 $month = date('n');
 $year = date('Y');
 
