@@ -64,7 +64,7 @@ if ($result->num_rows > 0) {
         echo '<div class="boat-calendar">';
 
         $gebruiker_id = $row['gebruiker_id'];
-        include 'generate_calendar.php';
+        include 'display_calendar.php';
         
         if (basename($_SERVER['PHP_SELF']) !== 'advertenties.php') {
             echo '<form action="save_calendar.php" method="post">';
