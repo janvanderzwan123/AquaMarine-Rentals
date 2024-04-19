@@ -81,6 +81,12 @@ for ($i = 1; $i <= $numDays; $i++) {
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sis", $eventTitle, $gebruikerID, $date);
         $stmt->execute();
+    } else {
+        // If no checkboxes are submitted, set event_title to "Onbeschikbaar"
+        $sql = "UPDATE verhuurder_calendar SET event_title = 'Onbeschikbaar' WHERE user_id = ? AND start_date = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $gebruikerID, $date);
+        $stmt->execute();
     }
 }
 
