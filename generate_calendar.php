@@ -24,19 +24,15 @@ $year = date('Y');
 
 $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
 $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
+
+// Fetch all event titles for the current user and month
+$sql = "SELECT DAY(start_date) AS day, event_title FROM verhuurder_calendar WHERE user_id = '$gebruiker_id' AND MONTH(start_date) = '$month' AND YEAR(start_date) = '$year'";
+$result = $conn->query($sql);
+
+// Create an array to store event titles indexed by day
 $eventTitles = [];
-
-for ($i = 1; $i <= $numDays; $i++) {
-    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = '$year-$month-$i' AND user_id = '$gebruiker_id'";
-
-    $result = $conn->query($sql);
-
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $eventTitles[$i] = $row['event_title'];
-    } else {
-        $eventTitles[$i] = 'onbeschikbaar';
-    }
+while ($row = $result->fetch_assoc()) {
+    $eventTitles[$row['day']] = $row['event_title'];
 }
 
 $html = '<form action="save_calendar.php" method="post"><div class="calendar">';
