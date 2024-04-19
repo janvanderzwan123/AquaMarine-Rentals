@@ -62,14 +62,21 @@ if ($result->num_rows > 0) {
         echo '<p>Prijs per dag: €' . $row["prijs_per_dag"] . '</p>';
         echo '</div>';
         echo '<div class="boat-calendar">';
-        include "generate_calendar.php";
+
+        $gebruiker_id = $row['gebruiker_id'];
+        include 'generate_calendar.php';
+        if (basename($_SERVER['PHP_SELF']) !== 'advertenties.php') {
+            echo '<form action="save_calendar.php" method="post">';
+            echo '<button type="submit" class="btn btn-primary save-button">Kalender opslaan</button>';
+            echo '</form>';
+        }
         echo '</div>';
-        
         echo '</div></a>';
     }
 } else {
     echo "Geen boten gevonden";
 }
+
 
 $conn->close();
 ?>
