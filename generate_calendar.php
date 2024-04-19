@@ -27,7 +27,7 @@ $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
 $eventTitles = [];
 
 for ($i = 1; $i <= $numDays; $i++) {
-    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = '$year-$month-$i' AND user_id = '$gebruiker_id'";
+    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = '$year-$month-$i' AND gebruiker_id = '$gebruiker_id'";
 
     $result = $conn->query($sql);
 

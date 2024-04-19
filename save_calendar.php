@@ -43,7 +43,7 @@ function getNumDaysInMonth() {
 
 // Function to retrieve the user's calendar events for the current month
 function getUserCalendarEvents($conn, $gebruikerID) {
-    $sql = "SELECT start_date, event_title FROM verhuurder_calendar WHERE user_id = ? AND MONTH(start_date) = MONTH(CURRENT_DATE()) AND YEAR(start_date) = YEAR(CURRENT_DATE())";
+    $sql = "SELECT start_date, event_title FROM verhuurder_calendar WHERE gebruiker_id = ? AND MONTH(start_date) = MONTH(CURRENT_DATE()) AND YEAR(start_date) = YEAR(CURRENT_DATE())";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $gebruikerID);
     $stmt->execute();
@@ -74,13 +74,13 @@ for ($i = 1; $i <= $numDays; $i++) {
             // If the checkbox is not checked, set event_title to "Onbeschikbaar"
             $eventTitle = 'Onbeschikbaar';
         }
-        $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE user_id = ? AND start_date = ?";
+        $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE gebruiker_id = ? AND start_date = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sis", $eventTitle, $gebruikerID, $date);
         $stmt->execute();
     } else {
         // If no checkboxes are submitted, set event_title to "Onbeschikbaar"
-        $sql = "UPDATE verhuurder_calendar SET event_title = 'Onbeschikbaar' WHERE user_id = ? AND start_date = ?";
+        $sql = "UPDATE verhuurder_calendar SET event_title = 'Onbeschikbaar' WHERE gebruiker_id = ? AND start_date = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("is", $gebruikerID, $date);
         $stmt->execute();
