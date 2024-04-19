@@ -27,10 +27,12 @@ $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
 $eventTitles = [];
 
 for ($i = 1; $i <= $numDays; $i++) {
-    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = '$year-$month-$i' AND gebruiker_id = '$gebruiker_id'";
+    $start_date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
+    $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
+
+    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = '$start_date' AND end_date = '$end_date' AND gebruiker_id = '$gebruiker_id'";
 
     $result = $conn->query($sql);
-
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $eventTitles[$i] = $row['event_title'];
