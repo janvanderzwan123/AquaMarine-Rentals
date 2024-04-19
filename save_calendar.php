@@ -36,6 +36,15 @@ if ($result->num_rows > 0) {
     exit();
 }
 
+// Check if the user exists in the verhuurder_calendar table
+$sql = "SELECT COUNT(*) AS count FROM verhuurder_calendar WHERE user_id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $gebruikerID);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$userExists = $row['count'] > 0;
+
 // Function to get the number of days in the current month
 function getNumDaysInMonth() {
     return date('t');
@@ -55,6 +64,18 @@ function getUserCalendarEvents($conn, $gebruikerID) {
     return $events;
 }
 
+// Add user to verhuurder_calendar if not already added
+if (!$userExists) {
+    $numDays = getNumDaysInMonth();
+    $startDate = date('Y-m-01');
+    $endDate = date('Y-m-t');
+
+    $sql = "INSERT INTO verhuurder_calendar (user_id, start_date, end_date, event_title) VALUES (?, ?, ?, 'Onbeschikbaar')";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iss", $gebruikerID, $startDate, $endDate);
+    $stmt->execute();
+}
+
 // Retrieve the calendar events for the current user and month
 $calendarEvents = getUserCalendarEvents($conn, $gebruikerID);
 
@@ -65,8 +86,6 @@ $numDays = getNumDaysInMonth();
 for ($i = 1; $i <= $numDays; $i++) {
     // Set the date
     $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
-    
-    // Check if the day-box was submitted
     if (isset($_POST['selected_dates'])) {
         // Check if the current day is in the submitted selected_dates array
         if (in_array($i, $_POST['selected_dates'])) {
@@ -76,7 +95,6 @@ for ($i = 1; $i <= $numDays; $i++) {
             // If the checkbox is not checked, set event_title to "Onbeschikbaar"
             $eventTitle = 'Onbeschikbaar';
         }
-        // Update the event_title in the database
         $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE user_id = ? AND start_date = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sis", $eventTitle, $gebruikerID, $date);
