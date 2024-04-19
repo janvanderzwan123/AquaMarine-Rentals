@@ -67,9 +67,15 @@ for ($i = 1; $i <= $numDays; $i++) {
     $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
     
     // Check if the day-box was submitted
-    if (isset($_POST['selected_dates']) && in_array($i, $_POST['selected_dates'])) {
-        // Toggle the event_title between "Beschikbaar" and "Onbeschikbaar"
-        $eventTitle = ($calendarEvents[$date] === 'Beschikbaar') ? 'Onbeschikbaar' : 'Beschikbaar';
+    if (isset($_POST['selected_dates'])) {
+        // Check if the current day is in the submitted selected_dates array
+        if (in_array($i, $_POST['selected_dates'])) {
+            // If the checkbox is checked, set event_title to "Beschikbaar"
+            $eventTitle = 'Beschikbaar';
+        } else {
+            // If the checkbox is not checked, set event_title to "Onbeschikbaar"
+            $eventTitle = 'Onbeschikbaar';
+        }
         // Update the event_title in the database
         $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE user_id = ? AND start_date = ?";
         $stmt = $conn->prepare($sql);
