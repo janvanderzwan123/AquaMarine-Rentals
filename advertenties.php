@@ -1,7 +1,6 @@
 <?php
 include 'database.php';
 
-// Initialize filter variables
 $datum = isset($_GET['datum']) ? $_GET['datum'] : '';
 $locatie = isset($_GET['locatie']) ? $_GET['locatie'] : '';
 $type_boot = isset($_GET['boot_type']) ? $_GET['boot_type'] : '';
@@ -11,7 +10,7 @@ $snelheid = isset($_GET['snelheid']) ? $_GET['snelheid'] : '';
 $passagiers = isset($_GET['passagiers']) ? $_GET['passagiers'] : '';
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$sql = "SELECT * FROM advertenties WHERE 1=1";
+$sql = "SELECT * FROM advertenties";
 if (!empty($datum)) {
     $sql .= " AND datum = '$datum'";
 }
