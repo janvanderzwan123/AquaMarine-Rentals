@@ -65,13 +65,6 @@ if ($result->num_rows > 0) {
 
         $gebruiker_id = $row['gebruiker_id'];
         include 'display_calendar.php';
-        
-        if (basename($_SERVER['PHP_SELF']) !== 'advertenties.php') {
-            echo '<form action="save_calendar.php" method="post">';
-            echo '<button type="submit" class="btn btn-primary save-button">Kalender opslaan</button>';
-            echo '</form>';
-        }
-        
         echo '</div>';
         
         echo '</div></a>';
