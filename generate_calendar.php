@@ -65,7 +65,6 @@ for ($i = 1; $i <= $numDays; $i++) {
 }
 
 $html .= '</div><button type="submit" class="btn btn-primary save-button">Kalender opslaan</button></form>';
-
 echo $html;
 
 $conn->close();
