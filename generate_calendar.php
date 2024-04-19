@@ -19,7 +19,6 @@ if ($result->num_rows > 0) {
     exit("Gebruiker niet gevonden.");
 }
 
-// Check if the user has 30 days each as a row in the calendar
 $month = date('n');
 $year = date('Y');
 $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
@@ -36,7 +35,6 @@ for ($i = 1; $i <= $numDays; $i++) {
     $row = $result->fetch_assoc();
     $rowCount = $row['num_rows'];
 
-    // If the user doesn't have a row for this date, insert one with event_title 'Onbeschikbaar'
     if ($rowCount == 0) {
         $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, gebruiker_id) VALUES (?, ?, 'Onbeschikbaar', ?)";
         $stmt = $conn->prepare($sql);
@@ -45,7 +43,6 @@ for ($i = 1; $i <= $numDays; $i++) {
     }
 }
 
-// Generate the calendar
 $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
 $eventTitles = [];
 
