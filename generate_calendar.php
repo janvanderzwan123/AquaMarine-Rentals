@@ -19,6 +19,30 @@ if ($result->num_rows > 0) {
     exit("Gebruiker niet gevonden.");
 }
 
+// Check if the user has 30 rows for each day in the current month
+$month = date('n');
+$year = date('Y');
+$numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
+
+for ($i = 1; $i <= $numDays; $i++) {
+    $date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
+    $sql = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE user_id = ? AND start_date = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $gebruikerID, $date);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $rowCount = $row['num_rows'];
+
+    // If the user doesn't have a row for this date, insert one with event_title 'Onbeschikbaar'
+    if ($rowCount == 0) {
+        $sql = "INSERT INTO verhuurder_calendar (user_id, start_date, event_title) VALUES (?, ?, 'Onbeschikbaar')";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("is", $gebruikerID, $date);
+        $stmt->execute();
+    }
+}
+
 $month = date('n');
 $year = date('Y');
 
