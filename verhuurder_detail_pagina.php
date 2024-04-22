@@ -38,6 +38,9 @@ if(isset($_GET['advertentie_id']) && is_numeric($_GET['advertentie_id'])) {
 <main>
     <div class="container mt-5">
         <div class="row">
+            <div class="col-md-12 mb-3">
+                <a href="profile.php" class="btn btn-secondary">Terug</a>
+            </div>
             <div class="col-md-6">
                 <div class="boat-photos">
                     <?php
