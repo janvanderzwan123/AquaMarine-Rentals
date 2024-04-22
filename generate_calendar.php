@@ -109,6 +109,3 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $html .= '</div><button type="submit" class="btn btn-primary save-button">Kalender opslaan</button></form>';
     return $html;
 }
-
-echo $calendarHTML;
-?>
