@@ -48,8 +48,9 @@ function initializeCalendar($conn, $advertentieID) {
     }
 }
 
+$advertentieID = $_POST['advertentie_id'];
 function getBoatCalendarEvents($conn, $advertentieID) {
-    $sql = "SELECT start_date, event_title FROM verhuurder_calendar WHERE advertentie_id = ? AND MONTH(start_date) = MONTH(CURRENT_DATE()) AND YEAR(start_date) = YEAR(CURRENT_DATE())";
+    $sql = "SELECT start_date, event_title FROM verhuurder_calendar WHERE advertentie_id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $advertentieID);
     $stmt->execute();
