@@ -43,6 +43,7 @@ $month = date('n');
 $year = date('Y');
 $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
 
+// Initialize calendar entries only for the specific boat
 for ($i = 1; $i <= $numDays; $i++) {
     $start_date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
     $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
@@ -63,6 +64,7 @@ for ($i = 1; $i <= $numDays; $i++) {
     }
 }
 
+// Retrieve calendar events only for the specific boat
 $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
 $eventTitles = [];
 
@@ -84,3 +86,4 @@ for ($i = 1; $i <= $numDays; $i++) {
     }
 }
 
+?>
