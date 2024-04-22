@@ -171,23 +171,27 @@ a.logout-btn {
     cursor: pointer;
 }
 
-.day-box {
-        width: 30px;
-        height: 30px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        line-height: 30px;
-        background-color: green;
-    }
+.row {
+    display: flex;
+}
 
-.selected {
-    background-color: red;
+.date, .day-box, .selected {
     width: 30px;
     height: 30px;
     border: 1px solid #ccc;
     border-radius: 4px;
     line-height: 30px;
+    text-align: center;
 }
+
+.day-box {
+    background-color: green;
+}
+
+.selected {
+    background-color: red;
+}
+
 
 .save-button {
     margin-top: 20px;
