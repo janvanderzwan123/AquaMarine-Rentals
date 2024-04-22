@@ -20,6 +20,8 @@ if(isset($_GET['advertentie_id']) && is_numeric($_GET['advertentie_id'])) {
         // Fetch other boat details as needed
     }
 
+    $currentMonth = date("F");
+
     // Fetch boat photos using a join to correctly associate them
     $sql_photos = "SELECT fl.link
     FROM foto_links fl
@@ -55,7 +57,6 @@ if(isset($_GET['advertentie_id']) && is_numeric($_GET['advertentie_id'])) {
                         <h3><?php echo $boot_naam; ?></h3>
                         <p>Type: <?php echo $boot_type; ?></p>
                         <div class="container mt-5">
-                            <h2>Jouw kalender:</h2>
                             <div class="calendar">
                                 <div class="header">
                                     <div>Maand: <?php echo $currentMonth ?></div>
