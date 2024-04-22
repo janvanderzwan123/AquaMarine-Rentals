@@ -14,7 +14,9 @@ if (!isset($_SESSION['username'])) {
 }
 $username = $_SESSION['username'];
 
-$sql = "SELECT advertentie_id FROM advertenties WHERE gebruikersnaam = ?";
+$sql = "SELECT advertentie_id FROM advertenties WHERE verhuurder_id = (
+    SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?
+)";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
