@@ -59,5 +59,4 @@ for ($i = 1; $i <= $numDays + $firstDayOfWeek - 1; $i++) {
 $html .= '</div>';
 
 echo $html;
-$conn->close();
-?>
+
