@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
 ?>
 
 <div class="container mt-5">
-    <h2>Welkom, <?php echo $username; ?>!</h2><br>
+    <center><h1>Welkom, <?php echo $username; ?>!</h1><br></center>
     <a href="new_listing.php" class="btn btn-primary">Nieuwe advertentie</a><br>
     <h3>Jouw advertenties:</h3><br>
     <div class="row">
