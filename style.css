@@ -40,7 +40,7 @@ body {
 }
 
 .boat-calendar {
-    flex: 0 0 40px; /* Fixed width for calendar icon */
+    flex: 0 0 40px;
     padding: 10px;
     text-align: center;
 }
@@ -227,6 +227,7 @@ a.logout-btn {
 .calendar {
     display: flex;
     flex-wrap: wrap;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
 }
 
 .calendar label {
@@ -236,6 +237,7 @@ a.logout-btn {
     text-align: center;
     padding: 5px;
     cursor: pointer;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
 }
 
 .calendar label.selected {
