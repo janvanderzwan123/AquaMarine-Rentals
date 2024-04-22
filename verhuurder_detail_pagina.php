@@ -54,6 +54,21 @@ if(isset($_GET['advertentie_id']) && is_numeric($_GET['advertentie_id'])) {
                     <div class="card-body">
                         <h3><?php echo $boot_naam; ?></h3>
                         <p>Type: <?php echo $boot_type; ?></p>
+                        <?php if ($role === 'verhuurder'): ?>
+                            <div class="container mt-5">
+                                <h2>Jouw kalender:</h2>
+                                <div class="calendar">
+                                    <div class="header">
+                                        <div>Maand: <?php echo $currentMonth ?></div>
+                                    </div>
+                                    <div class="days">
+                                        <?php
+                                            echo generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
+                                        ?>
+                                    </div>
+                                </div>
+                            </div><br><br>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
