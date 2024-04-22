@@ -30,11 +30,6 @@ if(isset($_GET['advertentie_id'])) {
 <main>
     <div class="container mt-5">
         <div class="row">
-            <!-- Terug button -->
-            <div class="col-md-12 mb-3">
-                <a href="index.php" class="btn btn-secondary">Terug</a>
-            </div>
-            <!-- Boat Photos -->
             <div class="col-md-6">
                 <div class="boat-photos">
                     <?php
@@ -48,13 +43,26 @@ if(isset($_GET['advertentie_id'])) {
                     ?>
                 </div>
             </div>
-            <!-- Boat Details -->
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <h3><?php echo $boot_naam; ?></h3>
                         <p>Type: <?php echo $boot_type; ?></p>
-                        <!-- Display other boat details here -->
+                        <?php if ($role === 'verhuurder'): ?>
+                            <div class="container mt-5">
+                                <h2>Jouw kalender:</h2>
+                                <div class="calendar">
+                                    <div class="header">
+                                        <div>Maand: <?php echo $currentMonth ?></div>
+                                    </div>
+                                    <div class="days">
+                                        <?php
+                                        include 'generate_calendar.php';
+                                        ?>
+                                    </div>
+                                </div>
+                            </div><br><br>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
