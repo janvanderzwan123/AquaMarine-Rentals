@@ -27,16 +27,16 @@ body {
 }
 
 .boat-details {
-    flex: 1; /* Take remaining space */
+    flex: 1;
     padding: 10px;
 }
 
 .boat-details h2 {
-    color: #006bb3; /* Blue heading color */
+    color: #006bb3;
 }
 
 .boat-details p {
-    color: #333; /* Dark text color */
+    color: #333;
 }
 
 .boat-calendar {
