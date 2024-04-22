@@ -11,7 +11,7 @@ include 'header.php';
                 <div class="input-group">
                     <input type="text" class="form-control" name="search" placeholder="Zoeken...">
                 <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="submit">Zoeken</button>
+            <button class="btn btn-outline-secondary" style="margin-top: 10%" type="submit">Zoeken</button>
         </div>
     </div>
 </form>
