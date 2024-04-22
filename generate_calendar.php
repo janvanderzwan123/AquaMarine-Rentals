@@ -45,14 +45,7 @@ $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $advertentie_id = $row['advertentie_id'];
-} else {
-    // Redirect to login page if no advertentie found for the current user
-    header("Location: login.php");
-    exit();
-}
+$advertentie_id = $row['advertentie_id'];
 
 $month = date('n');
 $year = date('Y');
