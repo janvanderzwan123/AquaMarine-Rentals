@@ -1,7 +1,7 @@
 <?php
 include 'database.php';
 session_start();
-
+// advertentie_id meegeven vanuit de verhuurder_detail_pagina van generate_calendar naar save_calendar om hem goed op te slaan in de database
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     header("Location: login.php");
     exit();
@@ -78,7 +78,9 @@ function initializeCalendar($conn, $advertentieID) {
 }
 
 function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
-    $html = '<form action="save_calendar.php" method="post"><div class="calendar">';
+    $advertentie_id = $_GET['advertentie_id'];
+    $html = "<form action='save_calendar.php?advertentie_id=" . $advertentie_id . "' method='post'><div class='calendar'>";
+
 
     for ($i = 1; $i <= $numDays; $i++) {
         if ($i == 1 || ($i - 1) % 7 == 0) {
