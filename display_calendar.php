@@ -49,23 +49,13 @@ for ($i = 1; $i <= $numDays; $i++) {
     if ($i == 1 || ($i - 1) % 7 == 0) {
         $html .= '<div class="row">';
     }
-    if ($i == 1) {
-        for ($j = 1; $j < $firstDayOfWeek; $j++) {
-            if ($eventTitles[$i] === 'Beschikbaar') {
-                $html .= '<div id="day-box" class="date"></div>';
-            } else {
-                $html .= '<div id="selected" class="date"></div>';
-            }
-        }
-    }
+
     if ($eventTitles[$i] === 'Beschikbaar') {
-        $html .= '<div style="background-color: green;">' . $i . '</div>';
+        $html .= '<div id="day-box" class="date"></div>';
     } else {
-        $html .= '<div style="background-color: red;">' . $i . '</div>';
+        $html .= '<div id="selected" class="date"></div>';
     }
-    if ($i == $numDays || ($i + $firstDayOfWeek - 1) % 7 == 0) {
-        $html .= '</div>';
-    }
+
 }
 $html .= '</div>';
 
