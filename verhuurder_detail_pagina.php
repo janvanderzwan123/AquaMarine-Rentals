@@ -1,7 +1,6 @@
 <?php
 include 'header.php'; 
 include 'generate_calendar.php';
-include 'database.php'; // Include database connection
 
 // Get the advertentie_id from the URL
 if(isset($_GET['advertentie_id']) && is_numeric($_GET['advertentie_id'])) {
@@ -67,8 +66,7 @@ if(isset($_GET['advertentie_id']) && is_numeric($_GET['advertentie_id'])) {
                                 </div>
                                 <div class="days">
                                     <?php
-                                        // Fetch advertentie_id and pass it to generateCalendar function
-                                        echo generateCalendar($numDays, $firstDayOfWeek, $eventTitles, $advertentie_id);
+                                        echo generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
                                     ?>
                                 </div>
                             </div>

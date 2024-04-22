@@ -7,7 +7,7 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     exit();
 }
 
-function generateCalendar($numDays, $firstDayOfWeek, $eventTitles, $advertentie_id) {
+function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $html = '<form action="save_calendar.php" method="post"><div class="calendar">';
 
     for ($i = 1; $i <= $numDays; $i++) {
@@ -36,3 +36,51 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles, $advertentie_
     $html .= '</div><button type="submit" class="btn btn-primary save-button">Kalender opslaan</button></form>';
     return $html;
 }
+
+$advertentie_id = $_SESSION['advertentie_id']; // Assuming you have stored the advertentie_id in the session
+
+$month = date('n');
+$year = date('Y');
+$numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
+
+for ($i = 1; $i <= $numDays; $i++) {
+    $start_date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
+    $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
+
+    $sql = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    $rowCount = $row['num_rows'];
+
+    if ($rowCount == 0) {
+        $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, advertentie_id) VALUES (?, ?, 'Onbeschikbaar', ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
+        $stmt->execute();
+    }
+}
+
+$firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
+$eventTitles = [];
+
+for ($i = 1; $i <= $numDays; $i++) {
+    $start_date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
+    $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
+
+    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $eventTitles[$i] = $row['event_title'];
+    } else {
+        $eventTitles[$i] = 'Onbeschikbaar';
+    }
+}
+
