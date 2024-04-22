@@ -3,12 +3,15 @@ include 'header.php';
 include 'generate_calendar.php';
 
 // Get the advertentie_id from the URL
-if(isset($_GET['advertentie_id'])) {
+if(isset($_GET['advertentie_id']) && is_numeric($_GET['advertentie_id'])) {
     $advertentie_id = $_GET['advertentie_id'];
 
     // Fetch boat details from the database based on advertentie_id
-    $sql = "SELECT * FROM advertenties WHERE advertentie_id = $advertentie_id";
-    $result = $conn->query($sql);
+    $sql = "SELECT * FROM advertenties WHERE advertentie_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $advertentie_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
@@ -21,9 +24,11 @@ if(isset($_GET['advertentie_id'])) {
     $sql_photos = "SELECT fl.link
     FROM foto_links fl
     JOIN foto_id fi ON fl.foto_id = fi.foto_id
-    WHERE fi.advertentie_id = $advertentie_id;
-    ";
-    $result_photos = $conn->query($sql_photos);
+    WHERE fi.advertentie_id = ?";
+    $stmt_photos = $conn->prepare($sql_photos);
+    $stmt_photos->bind_param("i", $advertentie_id);
+    $stmt_photos->execute();
+    $result_photos = $stmt_photos->get_result();
 }
 
 ?>
