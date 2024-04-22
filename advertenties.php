@@ -62,7 +62,7 @@ if ($result->num_rows > 0) {
         echo '<p>Prijs per dag: €' . $row["prijs_per_dag"] . '</p>';
         echo '</div>';
         $gebruiker_id = $row['gebruiker_id'];
-        displayCalendar($conn, $gebruiker_id);
+        echo displayCalendar($conn, $gebruiker_id);
   
         echo '</div></a>';
     }
