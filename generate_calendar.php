@@ -84,5 +84,3 @@ for ($i = 1; $i <= $numDays; $i++) {
     }
 }
 
-echo generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
-?>

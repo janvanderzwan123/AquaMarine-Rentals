@@ -58,4 +58,3 @@ function displayCalendar($conn, $advertentie_id) {
 
     return $html;
 }
-?>
