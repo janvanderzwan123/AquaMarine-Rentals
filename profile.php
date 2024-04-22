@@ -49,22 +49,6 @@ if ($result->num_rows > 0) {
             <p>Je hebt nog geen advertenties.</p>
         <?php endif; ?>
     </div>
-
-    <?php if ($role === 'verhuurder'): ?>
-        <div class="container mt-5">
-            <h2>Jouw kalender:</h2>
-            <div class="calendar">
-                <div class="header">
-                    <div>Maand: <?php echo $currentMonth ?></div>
-                </div>
-                <div class="days">
-                    <?php
-                    include 'generate_calendar.php';
-                    ?>
-                </div>
-            </div>
-        </div><br><br>
-    <?php endif; ?>
 </div>
 
 
