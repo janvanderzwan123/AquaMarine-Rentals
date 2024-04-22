@@ -5,13 +5,13 @@ include 'header.php';
 
 <main>
     <div class="container">
-        <div class="row mb-4">
+        <div class="row mb-4" style="margin-top: 4%;">
             <div class="col-md-12">
             <form action="index.php" method="GET">
-                <div class="input-group" style="margin-top: 10%;">
+                <div class="input-group">
                     <input type="text" class="form-control" name="search" placeholder="Zoeken...">
                 <div class="input-group-append">
-            <button class="btn btn-outline-secondary" style="margin-top: 10%" type="submit">Zoeken</button>
+            <button class="btn btn-outline-secondary"type="submit">Zoeken</button>
         </div>
     </div>
 </form>
