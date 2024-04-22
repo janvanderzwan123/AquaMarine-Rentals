@@ -37,7 +37,22 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     return $html;
 }
 
-$advertentie_id = $_SESSION['advertentie_id']; // Assuming you have stored the advertentie_id in the session
+$sql = "SELECT advertentie_id FROM advertenties WHERE verhuurder_id = (
+    SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?
+)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $advertentie_id = $row['advertentie_id'];
+} else {
+    // Redirect to login page if no advertentie found for the current user
+    header("Location: login.php");
+    exit();
+}
 
 $month = date('n');
 $year = date('Y');
