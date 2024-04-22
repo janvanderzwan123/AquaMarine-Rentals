@@ -31,7 +31,7 @@ if ($result->num_rows > 0) {
 <div class="container mt-5">
     <center><h1>Welkom, <?php echo $username; ?>!</h1><br></center>
     <h3>Jouw advertenties:</h3><br>
-    <a href="new_listing.php" class="btn btn-primary">Nieuwe advertentie</a><br>
+    <a href="new_listing.php" class="btn btn-primary">Nieuwe advertentie</a><br><br>
     <div class="row">
         <?php if (!empty($advertisements)): ?>
             <?php foreach ($advertisements as $advertisement): ?>
