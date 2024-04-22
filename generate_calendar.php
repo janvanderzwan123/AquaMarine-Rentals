@@ -21,6 +21,9 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $advertentie_id = $row['advertentie_id'];
 
+    // Initialize calendar entries only if they don't already exist
+    initializeCalendar($conn, $advertentie_id);
+
     // Get the number of days in the current month
     $numDays = date('t');
     // Get the first day of the week for the current month
@@ -51,6 +54,30 @@ if ($result->num_rows > 0) {
 } else {
     header("Location: login.php");
     exit();
+}
+
+function initializeCalendar($conn, $advertentieID) {
+    $month = date('n');
+    $year = date('Y');
+    $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
+
+    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = ?";
+    $stmt_check_calendar = $conn->prepare($sql_check_calendar);
+    $stmt_check_calendar->bind_param("i", $advertentieID);
+    $stmt_check_calendar->execute();
+    $result_check_calendar = $stmt_check_calendar->get_result();
+    $row_check_calendar = $result_check_calendar->fetch_assoc();
+    $num_rows_calendar = $row_check_calendar['num_rows'];
+
+    if ($num_rows_calendar == 0) {
+        for ($i = 1; $i <= $numDays; $i++) {
+            $date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
+            $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, advertentie_id) VALUES (?, ?, 'Onbeschikbaar', ?)";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("ssi", $date, $date, $advertentieID);
+            $stmt->execute();
+        }
+    }
 }
 
 function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
@@ -84,4 +111,4 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
 }
 
 echo $calendarHTML;
-
+?>

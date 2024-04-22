@@ -34,31 +34,6 @@ function getNumDaysInMonth() {
     return date('t');
 }
 
-function initializeCalendar($conn, $advertentieID) {
-    $month = date('n');
-    $year = date('Y');
-    $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
-
-    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = $advertentieID";
-    $stmt_check_calendar = $conn->prepare($sql_check_calendar);
-    $stmt_check_calendar->bind_param("i", $advertentieID);
-    $stmt_check_calendar->execute();
-    $result_check_calendar = $stmt_check_calendar->get_result();
-    $row_check_calendar = $result_check_calendar->fetch_assoc();
-    $num_rows_calendar = $row_check_calendar['num_rows'];
-
-    if ($num_rows_calendar == 0) {
-        for ($i = 1; $i <= $numDays; $i++) {
-            $date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
-            $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, advertentie_id) VALUES (?, ?, 'Onbeschikbaar', ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $date, $date, $advertentieID);
-            $stmt->execute();
-        }
-    }
-}
-
-
 $advertentieID = $_POST['advertentie_id'];
 
 function getBoatCalendarEvents($conn, $advertentieID) {
@@ -72,18 +47,6 @@ function getBoatCalendarEvents($conn, $advertentieID) {
         $events[$row['start_date']] = $row['event_title'];
     }
     return $events;
-}
-
-$sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = ?";
-$stmt_check_calendar = $conn->prepare($sql_check_calendar);
-$stmt_check_calendar->bind_param("i", $advertentieID);
-$stmt_check_calendar->execute();
-$result_check_calendar = $stmt_check_calendar->get_result();
-$row_check_calendar = $result_check_calendar->fetch_assoc();
-$num_rows_calendar = $row_check_calendar['num_rows'];
-
-if ($num_rows_calendar == 0) {
-    initializeCalendar($conn, $advertentieID);
 }
 
 $calendarEvents = getBoatCalendarEvents($conn, $advertentieID);
