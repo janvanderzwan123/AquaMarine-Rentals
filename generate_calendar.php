@@ -37,17 +37,7 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     return $html;
 }
 
-$username = $_SESSION['username'];
-
-$sql = "SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = '$username'";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $gebruiker_id = $row['gebruiker_id'];
-} else {
-    exit("Gebruiker niet gevonden.");
-}
+$advertentie_id = $_SESSION['advertentie_id']; // Assuming you have stored the advertentie_id in the session
 
 $month = date('n');
 $year = date('Y');
@@ -57,18 +47,18 @@ for ($i = 1; $i <= $numDays; $i++) {
     $start_date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
     $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
 
-    $sql = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND gebruiker_id = ?";
+    $sql = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $start_date, $end_date, $gebruiker_id);
+    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_assoc();
     $rowCount = $row['num_rows'];
 
     if ($rowCount == 0) {
-        $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, gebruiker_id) VALUES (?, ?, 'Onbeschikbaar', ?)";
+        $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, advertentie_id) VALUES (?, ?, 'Onbeschikbaar', ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $start_date, $end_date, $gebruiker_id);
+        $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
         $stmt->execute();
     }
 }
@@ -76,20 +66,16 @@ for ($i = 1; $i <= $numDays; $i++) {
 $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
 $eventTitles = [];
 
-$month = date('n');
-$year = date('Y');
-
-$numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
-$firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
-$eventTitles = [];
-
 for ($i = 1; $i <= $numDays; $i++) {
     $start_date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
     $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
 
-    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = '$start_date' AND end_date = '$end_date' AND gebruiker_id = '$gebruiker_id'";
+    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $eventTitles[$i] = $row['event_title'];
@@ -98,3 +84,5 @@ for ($i = 1; $i <= $numDays; $i++) {
     }
 }
 
+echo generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
+?>
