@@ -7,29 +7,26 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     exit();
 }
 
-$username = $_SESSION['username'];
+if (!isset($_GET['advertentie_id'])) {
+    header("Location: index.php");
+    exit();
+}
 
-$sql = "SELECT advertentie_id FROM advertenties WHERE verhuurder_id = (
-    SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?
-)";
+$advertentie_id = $_GET['advertentie_id'];
+
+$sql = "SELECT advertentie_id FROM advertenties WHERE advertentie_id = ?";
 $stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
+$stmt->bind_param("i", $advertentie_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
-    $advertentie_id = $row['advertentie_id'];
 
-    // Initialize calendar entries only if they don't already exist
     initializeCalendar($conn, $advertentie_id);
-
-    // Get the number of days in the current month
     $numDays = date('t');
-    // Get the first day of the week for the current month
     $firstDayOfWeek = date('N', mktime(0, 0, 0, date('n'), 1, date('Y')));
 
-    // Retrieve calendar events for the specific boat
     $eventTitles = [];
     for ($i = 1; $i <= $numDays; $i++) {
         $start_date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
@@ -109,3 +106,4 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $html .= '</div><button type="submit" class="btn btn-primary save-button">Kalender opslaan</button></form>';
     return $html;
 }
+?>
