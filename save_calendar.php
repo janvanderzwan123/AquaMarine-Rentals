@@ -39,7 +39,7 @@ function initializeCalendar($conn, $advertentieID) {
     $year = date('Y');
     $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
 
-    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = ?";
+    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = $advertentieID";
     $stmt_check_calendar = $conn->prepare($sql_check_calendar);
     $stmt_check_calendar->bind_param("i", $advertentieID);
     $stmt_check_calendar->execute();
