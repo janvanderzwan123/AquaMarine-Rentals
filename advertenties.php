@@ -1,5 +1,6 @@
 <?php
 include 'database.php';
+include 'display_calendar.php';
 
 $datum = isset($_GET['datum']) ? $_GET['datum'] : '';
 $locatie = isset($_GET['locatie']) ? $_GET['locatie'] : '';
