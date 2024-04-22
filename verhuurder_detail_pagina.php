@@ -1,5 +1,6 @@
 <?php
 include 'header.php'; 
+include 'generate_calendar.php';
 
 // Get the advertentie_id from the URL
 if(isset($_GET['advertentie_id'])) {
@@ -57,7 +58,7 @@ if(isset($_GET['advertentie_id'])) {
                                     </div>
                                     <div class="days">
                                         <?php
-                                        include 'generate_calendar.php';
+                                            echo displayCalendar($conn, $gebruiker_id);
                                         ?>
                                     </div>
                                 </div>
