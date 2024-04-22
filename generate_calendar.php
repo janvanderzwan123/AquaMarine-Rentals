@@ -7,6 +7,21 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     exit();
 }
 
+$username = $_SESSION['username'];
+
+$sql = "SELECT advertentie_id FROM advertenties WHERE verhuurder_id = (
+    SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?
+)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $advertentie_id = $row['advertentie_id'];
+} 
+
 function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $html = '<form action="save_calendar.php" method="post"><div class="calendar">';
 
@@ -37,15 +52,6 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     return $html;
 }
 
-$sql = "SELECT advertentie_id FROM advertenties WHERE verhuurder_id = (
-    SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?
-)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $username);
-$stmt->execute();
-$result = $stmt->get_result();
-
-$advertentie_id = $row['advertentie_id'];
 
 $month = date('n');
 $year = date('Y');
