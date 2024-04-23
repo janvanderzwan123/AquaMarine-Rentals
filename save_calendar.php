@@ -38,7 +38,7 @@ function updateCalendarEvents($conn, $advertentieID) {
     $numDays = getNumDaysInMonth();
 
     for ($i = 1; $i <= $numDays; $i++) {
-        $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
+        $date = date_create(date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y'))));
         if (isset($_POST['selected_dates'])) {
             if (in_array($i, $_POST['selected_dates'])) {
                 $eventTitle = 'Beschikbaar';
