@@ -34,8 +34,6 @@ function getNumDaysInMonth() {
     return date('t');
 }
 
-$advertentieID = $_POST['advertentie_id'];
-
 function updateCalendarEvents($conn, $advertentieID) {
     $numDays = getNumDaysInMonth();
 
