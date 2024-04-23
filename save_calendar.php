@@ -42,8 +42,10 @@ function updateCalendarEvents($conn, $advertentieID) {
         if (isset($_POST['selected_dates'])) {
             if (in_array($i, $_POST['selected_dates'])) {
                 $eventTitle = 'Beschikbaar';
+                echo '<div>eventtitle = ' . $eventTitle . '</div>';
             } else {
                 $eventTitle = 'Onbeschikbaar';
+                echo '<div>eventtitle = ' . $eventTitle . '</div>';
             }
             $sql = "UPDATE verhuurder_calendar SET event_title = 'Beschikbaar' WHERE advertentie_id = $advertentieID AND start_date = $date";
             echo '<div>advertentie id = ' . $advertentieID . '</div>';
