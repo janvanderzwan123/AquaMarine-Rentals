@@ -50,7 +50,7 @@ function updateCalendarEvents($conn, $advertentieID) {
             $sql = "UPDATE verhuurder_calendar SET event_title = 'Beschikbaar' WHERE advertentie_id = $advertentieID AND start_date = $date";
             echo '<div>advertentie id = ' . $advertentieID . '</div>';
             echo '<div>datum = ' . $date . '</div>';
-            echo '<div>datum = ' . gettype($date) . '</div>';
+            echo '<div>datum = ' . getdate($date) . '</div>';
 
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sis", $eventTitle, $advertentieID, $date);
