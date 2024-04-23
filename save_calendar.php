@@ -47,7 +47,8 @@ function updateCalendarEvents($conn, $advertentieID) {
             } else {
                 $eventTitle = 'Onbeschikbaar';
             }
-            $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE advertentie_id = ? AND start_date = ?";
+            $sql = "UPDATE verhuurder_calendar SET event_title = ? WHERE advertentie_id = $advertentieID AND start_date = ?";
+            echo '<div>' . $advertentieID . '</div>';
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("sis", $eventTitle, $advertentieID, $date);
             $stmt->execute();
