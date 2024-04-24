@@ -1,6 +1,5 @@
 <?php
 include 'header.php';
-include 'advertenties.php';
 
 ?>
 
@@ -67,7 +66,7 @@ include 'advertenties.php';
                 </div>
             </div>
             <div class="col-md-9">
-                <?php displayAdvertisements($conn); ?>
+                <?php include 'advertenties.php'; ?>
             </div>
         </div>
     </div>
