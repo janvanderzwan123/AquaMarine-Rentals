@@ -24,7 +24,7 @@ for ($i = 1; $i <= $numDays; $i++) {
 
     $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = $start_date  AND advertentie_id = $advertentie_id";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
+    $stmt->bind_param("ssi", $start_date, $advertentie_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
