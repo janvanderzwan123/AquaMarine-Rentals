@@ -85,25 +85,22 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $advertentie_id = $_GET['advertentie_id'];
     $html = "<form action='save_calendar.php?advertentie_id=" . $advertentie_id . "' method='post'><div class='calendar'>";
 
-
     for ($i = 1; $i <= $numDays; $i++) {
         if ($i == 1 || ($i + $firstDayOfWeek - 2) % 7 == 0) {
             $html .= '<div class="row">';
         }
-    
-        // Check if day is available
+
         $backgroundColor = ($eventTitles[$i] === 'Beschikbaar') ? 'green' : 'red';
         $checkedAttribute = ($eventTitles[$i] === 'Beschikbaar') ? 'checked' : '';
-    
+
         $html .= "<label style='background-color: $backgroundColor;'><input type='checkbox' name='selected_dates[]' value='$i' $checkedAttribute>$i</label>";
-    
+
         if ($i == $numDays || ($i + $firstDayOfWeek - 1) % 7 == 0) {
-            $html .= '</div>'; // Close the row div
+            $html .= '</div>';
         }
     }
-    
     $html .= "</div><button type='submit' class='btn btn-primary save-button'>Kalender opslaan</button></form>";
     return $html;
-    
 }
+
 ?>
