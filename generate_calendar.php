@@ -48,7 +48,7 @@ function initializeCalendar($conn, $advertentieID) {
 
     $advertentie_id = $_GET['advertentie_id'];
 
-    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = $advertentie_id AND start_date BETWEEN ? AND ?";
+    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = ? AND start_date BETWEEN ? AND ?";
     $stmt_check_calendar = $conn->prepare($sql_check_calendar);
     $stmt_check_calendar->bind_param("iss", $advertentieID, $startOfMonth, $endOfMonth);
     $stmt_check_calendar->execute();
