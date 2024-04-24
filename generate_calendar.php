@@ -32,7 +32,7 @@ for ($i = 1; $i <= $numDays; $i++) {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $eventTitles[$i] = $row['event_title'];
+        $eventTitles[$i] = $row['Beschikbaar'];
     } else {
         $eventTitles[$i] = 'Onbeschikbaar';
     }
