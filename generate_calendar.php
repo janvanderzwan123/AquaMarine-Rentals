@@ -1,11 +1,16 @@
 <?php
 include 'database.php';
+include 'display_calendar.php';
+
 session_start();
+
+// Redirect to login page if not logged in
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     header("Location: login.php");
     exit();
 }
 
+// Redirect to index.php if advertentie_id is not provided
 if (!isset($_GET['advertentie_id'])) {
     header("Location: index.php");
     exit();
@@ -13,11 +18,17 @@ if (!isset($_GET['advertentie_id'])) {
 
 $advertentie_id = $_GET['advertentie_id'];
 
+// Initialize calendar
 initializeCalendar($conn, $advertentie_id);
+
+// Get number of days in current month and first day of the week
 $numDays = date('t');
 $firstDayOfWeek = date('N', mktime(0, 0, 0, date('n'), 1, date('Y')));
 
+// Initialize array to store event titles
 $eventTitles = [];
+
+// Fetch event titles for each day of the month
 for ($i = 1; $i <= $numDays; $i++) {
     $start_date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
     $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
@@ -39,6 +50,7 @@ for ($i = 1; $i <= $numDays; $i++) {
 // Generate the HTML for the calendar
 $calendarHTML = generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
 
+// Function to initialize the calendar with 'Beschikbaar' for all days of the current month
 function initializeCalendar($conn, $advertentieID) {
     $month = date('n');
     $year = date('Y');
@@ -66,6 +78,7 @@ function initializeCalendar($conn, $advertentieID) {
     }
 }
 
+// Function to generate HTML for the calendar
 function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $advertentie_id = $_GET['advertentie_id'];
     $html = "<form action='save_calendar.php?advertentie_id=" . $advertentie_id . "' method='post'><div class='calendar'>";
@@ -76,7 +89,6 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
         }
 
         $backgroundColor = ($eventTitles[$i] === 'Onbeschikbaar') ? 'red' : 'green';
-        echo $eventTitles[$i];
         $checkedAttribute = ($eventTitles[$i] === 'Beschikbaar') ? 'checked' : '';
 
         $html .= "<label style='background-color: $backgroundColor;'><input type='checkbox' name='selected_dates[]' value='$i' $checkedAttribute>$i</label>";
