@@ -13,8 +13,6 @@ if (!isset($_GET['advertentie_id'])) {
 
 $advertentie_id = $_GET['advertentie_id'];
 
-// No need to query the database again for advertentie_id
-
 initializeCalendar($conn, $advertentie_id);
 $numDays = date('t');
 $firstDayOfWeek = date('N', mktime(0, 0, 0, date('n'), 1, date('Y')));
@@ -32,7 +30,7 @@ for ($i = 1; $i <= $numDays; $i++) {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $eventTitles[$i] = $row['Beschikbaar'];
+        $eventTitles[$i] = $row['event_title'];
     } else {
         $eventTitles[$i] = 'Onbeschikbaar';
     }
@@ -46,7 +44,6 @@ function initializeCalendar($conn, $advertentieID) {
     $year = date('Y');
     $numDays = date('t', mktime(0, 0, 0, $month, 1, $year));
 
-
     $startOfMonth = date('Y-m-01', mktime(0, 0, 0, $month, 1, $year));
     $endOfMonth = date('Y-m-t', mktime(0, 0, 0, $month, 1, $year));
 
@@ -58,16 +55,16 @@ function initializeCalendar($conn, $advertentieID) {
     $row_check_calendar = $result_check_calendar->fetch_assoc();
 
     if ($row_check_calendar['num_rows'] == 0) {
+        // No events scheduled, mark all dates as 'Beschikbaar'
         for ($i = 1; $i <= $numDays; $i++) {
             $date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
-            $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, advertentie_id) VALUES (?, ?, 'Onbeschikbaar', ?)";
+            $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, advertentie_id) VALUES (?, ?, 'Beschikbaar', ?)";
             $stmt = $conn->prepare($sql);
             $stmt->bind_param("ssi", $date, $date, $advertentieID);
             $stmt->execute();
         }
     }
 }
-
 
 function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $advertentie_id = $_GET['advertentie_id'];
@@ -78,7 +75,7 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
             $html .= '<div class="row">';
         }
 
-        $backgroundColor = ($eventTitles[$i] === 'Beschikbaar') ? 'green' : 'red';
+        $backgroundColor = ($eventTitles[$i] === 'Onbeschikbaar') ? 'red' : 'green';
         $checkedAttribute = ($eventTitles[$i] === 'Beschikbaar') ? 'checked' : '';
 
         $html .= "<label style='background-color: $backgroundColor;'><input type='checkbox' name='selected_dates[]' value='$i' $checkedAttribute>$i</label>";
@@ -90,5 +87,4 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $html .= "</div><button type='submit' class='btn btn-primary save-button'>Kalender opslaan</button></form>";
     return $html;
 }
-
 ?>
