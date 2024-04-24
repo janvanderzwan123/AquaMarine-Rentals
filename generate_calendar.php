@@ -36,7 +36,6 @@ for ($i = 1; $i <= $numDays; $i++) {
     }
 }
 
-// Generate the HTML for the calendar
 $calendarHTML = generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
 
 function initializeCalendar($conn, $advertentieID) {
@@ -68,6 +67,7 @@ function initializeCalendar($conn, $advertentieID) {
 
 function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
     $advertentie_id = $_GET['advertentie_id'];
+    echo $advertentie_id;
     $html = "<form action='save_calendar.php?advertentie_id=" . $advertentie_id . "' method='post'><div class='calendar'>";
 
     for ($i = 1; $i <= $numDays; $i++) {
@@ -76,8 +76,9 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
         }
 
         $backgroundColor = ($eventTitles[$i] === 'Onbeschikbaar') ? 'red' : 'green';
+        echo $backgroundColor;
         $checkedAttribute = ($eventTitles[$i] === 'Beschikbaar') ? 'checked' : '';
-
+        echo $checkedAttribute;
         $html .= "<label style='background-color: $backgroundColor;'><input type='checkbox' name='selected_dates[]' value='$i' $checkedAttribute>$i</label>";
 
         if ($i == $numDays || ($i + $firstDayOfWeek - 1) % 7 == 0) {
