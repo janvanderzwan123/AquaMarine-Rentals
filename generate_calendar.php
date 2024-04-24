@@ -13,11 +13,33 @@ if (!isset($_GET['advertentie_id'])) {
 
 $advertentie_id = $_GET['advertentie_id'];
 
-$sql = "SELECT advertentie_id FROM advertenties WHERE advertentie_id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $advertentie_id);
-$stmt->execute();
-$result = $stmt->get_result();
+// No need to query the database again for advertentie_id
+
+initializeCalendar($conn, $advertentie_id);
+$numDays = date('t');
+$firstDayOfWeek = date('N', mktime(0, 0, 0, date('n'), 1, date('Y')));
+
+$eventTitles = [];
+for ($i = 1; $i <= $numDays; $i++) {
+    $start_date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
+    $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
+
+    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $eventTitles[$i] = $row['event_title'];
+    } else {
+        $eventTitles[$i] = 'Onbeschikbaar';
+    }
+}
+
+// Generate the HTML for the calendar
+$calendarHTML = generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
 
 function initializeCalendar($conn, $advertentieID) {
     $month = date('n');
