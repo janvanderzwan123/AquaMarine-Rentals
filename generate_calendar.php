@@ -76,7 +76,6 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
         }
 
         $backgroundColor = ($eventTitles[$i] === 'Onbeschikbaar') ? 'red' : 'green';
-        echo $eventTitles[$i];
         $checkedAttribute = ($eventTitles[$i] === 'Beschikbaar') ? 'checked' : '';
 
         $html .= "<label style='background-color: $backgroundColor;'><input type='checkbox' name='selected_dates[]' value='$i' $checkedAttribute>$i</label>";
