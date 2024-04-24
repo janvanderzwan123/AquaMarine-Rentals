@@ -40,7 +40,7 @@ if (!empty($search)) {
 $result = $conn->query($sql);
 
 
-if (true) {
+if ($result->num_rows > 0) {
     // Loop through each row and display boat listings
     while ($row = $result->fetch_assoc()) {
         echo '<a href="detail_pagina.php?advertentie_id=' . $row['advertentie_id'] . '" style="text-decoration: none;"><div class="boat-listing">';

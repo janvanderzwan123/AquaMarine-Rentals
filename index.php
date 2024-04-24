@@ -1,5 +1,20 @@
 <?php
 include 'header.php';
+include 'database.php';
+include 'display_calendar.php';
+
+// Retrieve search parameters from the URL
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+// Construct the SQL query based on search parameters
+$sql = "SELECT * FROM advertenties WHERE 1 = 1"; // Start with a condition that is always true
+
+if (!empty($search)) {
+    $sql .= " AND (boot_naam LIKE '%$search%' OR boot_type LIKE '%$search%' OR locatie LIKE '%$search%')";
+}
+
+// Execute the SQL query
+$result = $conn->query($sql);
 
 ?>
 
@@ -7,69 +22,67 @@ include 'header.php';
     <div class="container">
         <div class="row mb-4" style="margin-top: 4%;">
             <div class="col-md-12">
-            <form action="index.php" method="GET">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="search" placeholder="Zoeken...">
-                <div class="input-group-append">
-            <button class="btn btn-outline-secondary"type="submit">Zoeken</button>
-        </div>
-    </div>
-</form>
-
+                <form action="index.php" method="GET">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search" placeholder="Zoeken...">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Zoeken</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h3>Filteren</h3>
-                        <hr>
-                        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
-                            <div class="form-group">
-                                <label for="datum">Datum</label>
-                                <input type="date" class="form-control" id="datum" name="datum" value="<?php echo isset($_GET['datum']) ? htmlspecialchars($_GET['datum']) : ''; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="locatie">Locatie</label>
-                                <input type="text" class="form-control" id="locatie" name="locatie" value="<?php echo isset($_GET['locatie']) ? htmlspecialchars($_GET['locatie']) : ''; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="boot_type">Soort boot</label>
-                                <select class="form-control" id="boot_type" name="boot_type">
-                                    <option value="">Kiezen</option>
-                                    <option value="Kano" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'kano') ? 'selected' : ''; ?>>Kano</option>
-                                    <option value="Motorboot" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'motorboot') ? 'selected' : ''; ?>>Motorboot</option>
-                                    <option value="Zeilboot" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'zeilboot') ? 'selected' : ''; ?>>Zeilboot</option>
-                                    <option value="Zeilschip" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'zeilschip') ? 'selected' : ''; ?>>Zeilschip</option>
-                                    <option value="Kajak" <?php echo (isset($_GET['boot_type']) && $_GET['boot_type'] === 'kajak') ? 'selected' : ''; ?>>Kajak</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="vermogen">Vermogen</label>
-                                <input type="number" class="form-control" id="vermogen" name="vermogen" value="<?php echo isset($_GET['vermogen']) ? htmlspecialchars($_GET['vermogen']) : ''; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="lengte">Lengte</label>
-                                <input type="number" class="form-control" id="lengte" name="lengte" value="<?php echo isset($_GET['lengte']) ? htmlspecialchars($_GET['lengte']) : ''; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="snelheid">Snelheid</label>
-                                <input type="number" class="form-control" id="snelheid" name="snelheid" value="<?php echo isset($_GET['snelheid']) ? htmlspecialchars($_GET['snelheid']) : ''; ?>">
-                            </div>
-                            <div class="form-group">
-                                <label for="passagiers">Aantal passagiers</label>
-                                <input type="number" class="form-control" id="passagiers" name="passagiers" value="<?php echo isset($_GET['passagiers']) ? htmlspecialchars($_GET['passagiers']) : ''; ?>">
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="submit">Filters Toepassen</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-9">
-                <?php include 'advertenties.php'; ?>
-            </div>
+            <?php
+            // Check if any results were found
+            if ($result->num_rows > 0) {
+                // Loop through each row and display boat listings
+                while ($row = $result->fetch_assoc()) {
+                    echo '<div class="col-md-4">';
+                    echo '<a href="detail_pagina.php?advertentie_id=' . $row['advertentie_id'] . '" style="text-decoration: none;">';
+                    echo '<div class="boat-listing">';
+                    
+                    // Display boat image
+                    $photoIdArray = explode(',', $row["photo_id"]);
+                    $firstPhotoId = $photoIdArray[0];
+                    $photoSql = "SELECT link FROM foto_links WHERE foto_id = $firstPhotoId LIMIT 1";
+                    $photoResult = $conn->query($photoSql);
+                    if ($photoResult->num_rows > 0) {
+                        $photoRow = $photoResult->fetch_assoc();
+                        $photoLink = $photoRow['link'];
+                        echo '<div class="boat-image"><img src="' . $photoLink . '" alt="Boat Image"></div>'; 
+                    } else {
+                        echo '<div class="boat-image"><img src="placeholder.png" alt="Boat Image"></div>'; 
+                    }
+
+                    // Display boat details
+                    echo '<div class="boat-details">';
+                    echo '<h2>' . $row["boot_naam"] . '</h2>';
+                    echo '<p>Type: ' . $row["boot_type"] . '</p>';
+                    echo '<p>Locatie: ' . $row["locatie"] . '</p>';
+                    echo '<p>Prijs per dag: €' . $row["prijs_per_dag"] . '</p>';
+                    echo '</div>';
+                    
+                    // Display calendar for the boat
+                    echo displayCalendar($conn, $row['advertentie_id']);
+
+                    echo '</div>';
+                    echo '</a>';
+                    echo '</div>';
+                }
+            } else {
+                echo '<div class="col-md-12">';
+                echo "Geen boten gevonden";
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
 </main>
 
 <?php include 'footer.php'; ?>
+
+<?php
+// Close the database connection
+$conn->close();
+?>
