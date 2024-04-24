@@ -1,7 +1,6 @@
 <?php
 include 'database.php';
 session_start();
-// advertentie_id meegeven vanuit de verhuurder_detail_pagina van generate_calendar naar save_calendar om hem goed op te slaan in de database
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     header("Location: login.php");
     exit();
@@ -19,39 +18,6 @@ $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $advertentie_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-
-    initializeCalendar($conn, $advertentie_id);
-    $numDays = date('t');
-    $firstDayOfWeek = date('N', mktime(0, 0, 0, date('n'), 1, date('Y')));
-
-    $eventTitles = [];
-    for ($i = 1; $i <= $numDays; $i++) {
-        $start_date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
-        $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
-
-        $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $eventTitles[$i] = $row['event_title'];
-        } else {
-            $eventTitles[$i] = 'Onbeschikbaar';
-        }
-    }
-
-    // Generate the HTML for the calendar
-    $calendarHTML = generateCalendar($numDays, $firstDayOfWeek, $eventTitles);
-} else {
-    header("Location: login.php");
-    exit();
-}
 
 function initializeCalendar($conn, $advertentieID) {
     $month = date('n');
