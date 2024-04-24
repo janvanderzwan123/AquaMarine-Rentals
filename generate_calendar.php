@@ -22,9 +22,9 @@ for ($i = 1; $i <= $numDays; $i++) {
     $start_date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
     $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
 
-    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = $start_date  AND advertentie_id = $advertentie_id";
+    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $start_date, $advertentie_id);
+    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -46,7 +46,9 @@ function initializeCalendar($conn, $advertentieID) {
     $startOfMonth = date('Y-m-01', mktime(0, 0, 0, $month, 1, $year));
     $endOfMonth = date('Y-m-t', mktime(0, 0, 0, $month, 1, $year));
 
-    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = ? AND start_date BETWEEN ? AND ?";
+    $advertentie_id = $_GET['advertentie_id'];
+
+    $sql_check_calendar = "SELECT COUNT(*) AS num_rows FROM verhuurder_calendar WHERE advertentie_id = $advertentie_id AND start_date BETWEEN ? AND ?";
     $stmt_check_calendar = $conn->prepare($sql_check_calendar);
     $stmt_check_calendar->bind_param("iss", $advertentieID, $startOfMonth, $endOfMonth);
     $stmt_check_calendar->execute();
