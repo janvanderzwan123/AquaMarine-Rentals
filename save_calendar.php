@@ -65,5 +65,7 @@ function toggleCalendarEvents($conn, $advertentieID) {
 
 toggleCalendarEvents($conn, $advertentieID);
 
+// Redirect back to the profile page after updating the calendar
+header("Location: profile.php");
 exit();
 ?>
