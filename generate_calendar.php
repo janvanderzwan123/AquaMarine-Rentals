@@ -20,11 +20,11 @@ $firstDayOfWeek = date('N', mktime(0, 0, 0, date('n'), 1, date('Y')));
 $eventTitles = [];
 for ($i = 1; $i <= $numDays; $i++) {
     $start_date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
-    $end_date = date('Y-m-d H:i:s', strtotime($start_date . ' + 24 hours'));
+    $end_date = date('Y-m-d', strtotime($start_date . ' + 1 day'));
 
-    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date = ? AND end_date = ? AND advertentie_id = ?";
+    $sql = "SELECT event_title FROM verhuurder_calendar WHERE start_date <= ? AND end_date >= ? AND advertentie_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssi", $start_date, $end_date, $advertentie_id);
+    $stmt->bind_param("ssi", $end_date, $start_date, $advertentie_id);
     $stmt->execute();
     $result = $stmt->get_result();
 
