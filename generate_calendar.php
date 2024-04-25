@@ -56,7 +56,6 @@ function initializeCalendar($conn, $advertentieID) {
     $row_check_calendar = $result_check_calendar->fetch_assoc();
 
     if ($row_check_calendar['num_rows'] == 0) {
-        // No events scheduled, mark all dates as 'Beschikbaar'
         for ($i = 1; $i <= $numDays; $i++) {
             $date = date('Y-m-d', mktime(0, 0, 0, $month, $i, $year));
             $sql = "INSERT INTO verhuurder_calendar (start_date, end_date, event_title, advertentie_id) VALUES (?, ?, 'Beschikbaar', ?)";
@@ -77,7 +76,7 @@ function generateCalendar($numDays, $firstDayOfWeek, $eventTitles) {
         }
 
         $backgroundColor = ($eventTitles[$i] === 'Onbeschikbaar') ? 'red' : 'green';
-        $checkedAttribute = ($eventTitles[$i] === 'Beschikbaar') ? 'checked' : '';
+        $checkedAttribute = ($eventTitles[$i] === 'Beschikbaar') ? '' : '';
         $html .= "<label style='background-color: $backgroundColor;'><input type='checkbox' name='selected_dates[]' value='$i' $checkedAttribute>$i</label>";
 
         if ($i == $numDays || ($i + $firstDayOfWeek - 1) % 7 == 0) {
