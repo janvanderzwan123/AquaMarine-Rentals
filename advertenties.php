@@ -1,5 +1,4 @@
 <?php
-echo "<div>test</div>";
 include 'database.php';
 include 'display_calendar.php';
 
@@ -60,6 +59,8 @@ $typeString = str_repeat('s', count($params)); // Create a string with a number 
 $stmt->bind_param($typeString, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
+
+echo $result;
 
 
 if ($result->num_rows > 0) {
