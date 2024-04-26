@@ -3,7 +3,7 @@ echo "<div>voor database</div>";
 include 'database.php';
 echo "<div>na database</div>";
 echo "<div>voor calendar</div>";
-// include 'display_calendar.php';
+include 'display_calendar.php';
 echo "<div>na calendar</div>";
 
 
@@ -118,7 +118,7 @@ if ($result->num_rows > 0) {
         echo '</div>';
 
         // Display calendar for the boat
-        // echo displayCalendar($conn, $row['advertentie_id']);
+        echo displayCalendar($conn, $row['advertentie_id']);
 
         echo '</div></a>';
     }
