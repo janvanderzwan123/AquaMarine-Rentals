@@ -2,42 +2,62 @@
 include 'database.php';
 include 'display_calendar.php';
 
-$datum = isset($_GET['datum']) ? $_GET['datum'] : '';
-$locatie = isset($_GET['locatie']) ? $_GET['locatie'] : '';
-$type_boot = isset($_GET['boot_type']) ? $_GET['boot_type'] : '';
-$vermogen = isset($_GET['vermogen']) ? $_GET['vermogen'] : '';
-$lengte = isset($_GET['lengte']) ? $_GET['lengte'] : '';
-$snelheid = isset($_GET['snelheid']) ? $_GET['snelheid'] : '';
-$passagiers = isset($_GET['passagiers']) ? $_GET['passagiers'] : '';
-$search = isset($_GET['search']) ? $_GET['search'] : '';
+$datum = $_GET['datum'] ?? '';
+$locatie = $_GET['locatie'] ?? '';
+$type_boot = $_GET['boot_type'] ?? '';
+$vermogen = $_GET['vermogen'] ?? '';
+$lengte = $_GET['lengte'] ?? '';
+$snelheid = $_GET['snelheid'] ?? '';
+$passagiers = $_GET['passagiers'] ?? '';
+$search = $_GET['search'] ?? '';
 
-$sql = "SELECT * FROM advertenties WHERE 1=1";
-if (!empty($datum)) {
-    $sql .= " AND datum = '$datum'";
+$conditions = [];
+$params = [];
+
+if ($datum) {
+    $conditions[] = "datum = ?";
+    $params[] = $datum;
 }
-if (!empty($locatie)) {
-    $sql .= " AND locatie = '$locatie'";
+if ($locatie) {
+    $conditions[] = "locatie = ?";
+    $params[] = $locatie;
 }
-if (!empty($type_boot)) {
-    $sql .= " AND boot_type = '$type_boot'";
+if ($type_boot) {
+    $conditions[] = "boot_type = ?";
+    $params[] = $type_boot;
 }
-if (!empty($vermogen)) {
-    $sql .= " AND vermogen = '$vermogen'";
+if ($vermogen) {
+    $conditions[] = "vermogen = ?";
+    $params[] = $vermogen;
 }
-if (!empty($lengte)) {
-    $sql .= " AND lengte = '$lengte'";
+if ($lengte) {
+    $conditions[] = "lengte = ?";
+    $params[] = $lengte;
 }
-if (!empty($snelheid)) {
-    $sql .= " AND snelheid = '$snelheid'";
+if ($snelheid) {
+    $conditions[] = "snelheid = ?";
+    $params[] = $snelheid;
 }
-if (!empty($passagiers)) {
-    $sql .= " AND passagiers = '$passagiers'";
+if ($passagiers) {
+    $conditions[] = "passagiers = ?";
+    $params[] = $passagiers;
 }
-if (!empty($search)) {
-    $sql .= " AND (boot_naam LIKE '%$search%' OR boot_type LIKE '%$search%' OR locatie LIKE '%$search%')";
+if ($search) {
+    $conditions[] = "(boot_naam LIKE CONCAT('%', ?, '%') OR boot_type LIKE CONCAT('%', ?, '%') OR locatie LIKE CONCAT('%', ?, '%'))";
+    $params[] = $search;
+    $params[] = $search;
+    $params[] = $search;
 }
 
-$result = $conn->query($sql);
+$sql = "SELECT * FROM advertenties";
+if (!empty($conditions)) {
+    $sql .= " WHERE " . implode(' AND ', $conditions);
+}
+
+$stmt = $conn->prepare($sql);
+$stmt->bind_param(str_repeat('s', count($params)), ...$params);
+$stmt->execute();
+$result = $stmt->get_result();
 
 
 if ($result->num_rows > 0) {
