@@ -53,14 +53,13 @@ $sql = "SELECT * FROM advertenties";
 // if (!empty($conditions)) {
 //     $sql .= " WHERE " . implode(' AND ', $conditions);
 // }
-echo $sql;
 $stmt = $conn->prepare($sql);
 $typeString = str_repeat('s', count($params)); // Create a string with a number of 's' characters equal to the number of parameters
 $stmt->bind_param($typeString, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
 
-echo $result;
+var_dump($result);
 
 
 if ($result->num_rows > 0) {
