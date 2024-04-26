@@ -1,5 +1,6 @@
 <?php
 include 'database.php';
+include 'display_calendar.php';
 
 $datum = $_GET['datum'] ?? '';
 $locatie = $_GET['locatie'] ?? '';
@@ -54,7 +55,8 @@ if (!empty($conditions)) {
 }
 
 $stmt = $conn->prepare($sql);
-$stmt->bind_param(str_repeat('s', count($params)), ...$params);
+$typeString = str_repeat('s', count($params)); // Create a string with a number of 's' characters equal to the number of parameters
+$stmt->bind_param($typeString, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
 
@@ -86,7 +88,7 @@ if ($result->num_rows > 0) {
         echo '</div>';
 
         // Display calendar for the boat
-        // echo displayCalendar($conn, $row['advertentie_id']);
+        echo displayCalendar($conn, $row['advertentie_id']);
 
         echo '</div></a>';
     }
