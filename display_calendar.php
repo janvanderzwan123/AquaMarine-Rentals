@@ -2,11 +2,6 @@
 include 'database.php';
 session_start();
 
-// Check if the user is logged in, otherwise redirect to login page
-if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
-    header("Location: login.php");
-    exit();
-}
 
 $username = $_SESSION['username'];
 
