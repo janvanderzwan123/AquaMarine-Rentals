@@ -2,15 +2,26 @@
 include 'database.php';
 session_start();
 
+// Check if the user is logged in, otherwise redirect to login page
 if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
     header("Location: login.php");
     exit();
 }
 
 $username = $_SESSION['username'];
+
+// Prepare statement with error handling
 $stmt = $conn->prepare("SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?");
+if ($stmt === false) {
+    exit('MySQL prepare error: ' . $conn->error);
+}
+
+// Bind parameters and execute with error handling
 $stmt->bind_param("s", $username);
-$stmt->execute();
+if (!$stmt->execute()) {
+    exit('Query execution error: ' . $stmt->error);
+}
+
 $result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
@@ -19,12 +30,18 @@ if ($result->num_rows > 0) {
     exit("Gebruiker niet gevonden.");
 }
 
-
+// Get advertentie_id
 $stmt = $conn->prepare("SELECT advertentie_id FROM advertenties WHERE verhuurder_id = ?");
-$stmt->bind_param("i", $gebruiker_id);
-$stmt->execute();
-$result = $stmt->get_result();
+if ($stmt === false) {
+    exit('MySQL prepare error: ' . $conn->error);
+}
 
+$stmt->bind_param("i", $gebruiker_id);
+if (!$stmt->execute()) {
+    exit('Query execution error: ' . $stmt->error);
+}
+
+$result = $stmt->get_result();
 if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $advertentie_id = $row['advertentie_id'];
@@ -39,12 +56,19 @@ function displayCalendar($conn, $advertentie_id) {
     $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
     $eventTitles = array_fill(1, $numDays, 'Onbeschikbaar');
 
+    // Prepare statement with error handling
     $sql = "SELECT DAY(start_date) AS day, event_title FROM verhuurder_calendar WHERE MONTH(start_date) = ? AND YEAR(start_date) = ? AND advertentie_id = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iii", $month, $year, $advertentie_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    if ($stmt === false) {
+        exit('MySQL prepare error: ' . $conn->error);
+    }
 
+    $stmt->bind_param("iii", $month, $year, $advertentie_id);
+    if (!$stmt->execute()) {
+        exit('Query execution error: ' . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $eventTitles[$row['day']] = $row['event_title'];
     }
@@ -58,7 +82,7 @@ function displayCalendar($conn, $advertentie_id) {
             $html .= '<div class="date"></div>';
         } else {
             $day = $i - $firstDayOfWeek + 1;
-            $class = $eventTitles[$day] === 'Beschikbaar' ? 'day-box' : 'selected';
+            $class = ($eventTitles[$day] === 'Beschikbaar') ? 'day-box' : 'selected';
             $html .= '<div class="' . $class . '">' . $day . '</div>';
         }
         if ($i % 7 == 0 || $i == $numDays + $firstDayOfWeek - 1) {
@@ -69,3 +93,4 @@ function displayCalendar($conn, $advertentie_id) {
 
     return $html;
 }
+?>
