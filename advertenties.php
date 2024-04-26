@@ -3,57 +3,57 @@ echo "<div>test</div>";
 include 'database.php';
 include 'display_calendar.php';
 
-$datum = $_GET['datum'] ?? '';
-$locatie = $_GET['locatie'] ?? '';
-$type_boot = $_GET['boot_type'] ?? '';
-$vermogen = $_GET['vermogen'] ?? '';
-$lengte = $_GET['lengte'] ?? '';
-$snelheid = $_GET['snelheid'] ?? '';
-$passagiers = $_GET['passagiers'] ?? '';
-$search = $_GET['search'] ?? '';
+// $datum = $_GET['datum'] ?? '';
+// $locatie = $_GET['locatie'] ?? '';
+// $type_boot = $_GET['boot_type'] ?? '';
+// $vermogen = $_GET['vermogen'] ?? '';
+// $lengte = $_GET['lengte'] ?? '';
+// $snelheid = $_GET['snelheid'] ?? '';
+// $passagiers = $_GET['passagiers'] ?? '';
+// $search = $_GET['search'] ?? '';
 
-$conditions = [];
-$params = [];
+// $conditions = [];
+// $params = [];
 
-if ($datum) {
-    $conditions[] = "datum = ?";
-    $params[] = $datum;
-}
-if ($locatie) {
-    $conditions[] = "locatie = ?";
-    $params[] = $locatie;
-}
-if ($type_boot) {
-    $conditions[] = "boot_type = ?";
-    $params[] = $type_boot;
-}
-if ($vermogen) {
-    $conditions[] = "vermogen = ?";
-    $params[] = $vermogen;
-}
-if ($lengte) {
-    $conditions[] = "lengte = ?";
-    $params[] = $lengte;
-}
-if ($snelheid) {
-    $conditions[] = "snelheid = ?";
-    $params[] = $snelheid;
-}
-if ($passagiers) {
-    $conditions[] = "passagiers = ?";
-    $params[] = $passagiers;
-}
-if ($search) {
-    $conditions[] = "(boot_naam LIKE CONCAT('%', ?, '%') OR boot_type LIKE CONCAT('%', ?, '%') OR locatie LIKE CONCAT('%', ?, '%'))";
-    $params[] = $search;
-    $params[] = $search;
-    $params[] = $search;
-}
+// if ($datum) {
+//     $conditions[] = "datum = ?";
+//     $params[] = $datum;
+// }
+// if ($locatie) {
+//     $conditions[] = "locatie = ?";
+//     $params[] = $locatie;
+// }
+// if ($type_boot) {
+//     $conditions[] = "boot_type = ?";
+//     $params[] = $type_boot;
+// }
+// if ($vermogen) {
+//     $conditions[] = "vermogen = ?";
+//     $params[] = $vermogen;
+// }
+// if ($lengte) {
+//     $conditions[] = "lengte = ?";
+//     $params[] = $lengte;
+// }
+// if ($snelheid) {
+//     $conditions[] = "snelheid = ?";
+//     $params[] = $snelheid;
+// }
+// if ($passagiers) {
+//     $conditions[] = "passagiers = ?";
+//     $params[] = $passagiers;
+// }
+// if ($search) {
+//     $conditions[] = "(boot_naam LIKE CONCAT('%', ?, '%') OR boot_type LIKE CONCAT('%', ?, '%') OR locatie LIKE CONCAT('%', ?, '%'))";
+//     $params[] = $search;
+//     $params[] = $search;
+//     $params[] = $search;
+// }
 
 $sql = "SELECT * FROM advertenties";
-if (!empty($conditions)) {
-    $sql .= " WHERE " . implode(' AND ', $conditions);
-}
+// if (!empty($conditions)) {
+//     $sql .= " WHERE " . implode(' AND ', $conditions);
+// }
 
 $stmt = $conn->prepare($sql);
 $typeString = str_repeat('s', count($params)); // Create a string with a number of 's' characters equal to the number of parameters
