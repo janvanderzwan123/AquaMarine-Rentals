@@ -34,13 +34,9 @@ $row = $result->fetch_assoc();
 $advertentieID = $row['advertentie_id'];
 
 // Function to toggle calendar events based on the selected dates
-function toggleCalendarEvents($conn, $advertentieID) {
-    $numDays = date('t');  // Number of days in the current month
-    $selected_dates = isset($_POST['selected_dates']) ? $_POST['selected_dates'] : [];
-
-    for ($i = 1; $i <= $numDays; $i++) {
-        $date = date('Y-m-d', mktime(0, 0, 0, date('n'), $i, date('Y')));
-        // Check the current state of each date
+function toggleCalendarEvents($conn, $advertentieID, $selected_dates) {
+    foreach ($selected_dates as $date) {
+        // Check the current state of the date
         $sql = "SELECT event_title FROM verhuurder_calendar WHERE advertentie_id = ? AND start_date = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("is", $advertentieID, $date);
@@ -49,11 +45,7 @@ function toggleCalendarEvents($conn, $advertentieID) {
         $currentEventTitle = $result->fetch_assoc()['event_title'];
 
         // Determine the new event title based on whether the date was selected and its current state
-        if (in_array($i, $selected_dates)) {
-            $newEventTitle = ($currentEventTitle === 'Beschikbaar') ? 'Onbeschikbaar' : 'Beschikbaar';
-        } else {
-            $newEventTitle = $currentEventTitle; // No change if not selected
-        }
+        $newEventTitle = ($currentEventTitle === 'Beschikbaar') ? 'Onbeschikbaar' : 'Beschikbaar';
 
         // Update the event title for the date
         $sqlUpdate = "UPDATE verhuurder_calendar SET event_title = ? WHERE advertentie_id = ? AND start_date = ?";
@@ -63,7 +55,9 @@ function toggleCalendarEvents($conn, $advertentieID) {
     }
 }
 
-toggleCalendarEvents($conn, $advertentieID);
+// Call the function with the current advertisement ID and selected dates
+toggleCalendarEvents($conn, $advertentieID, $_POST['selected_dates']);
+
 
 // Redirect back to the profile page after updating the calendar
 header("Location: profile.php");
