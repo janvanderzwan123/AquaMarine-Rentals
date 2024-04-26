@@ -10,15 +10,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error_message = "Please provide selected dates and additional information.";
     } else {
         echo "<div>gelukt!</div>";
-    //     // Include database connection
-    //     include 'database.php';
+        // Include database connection
+        include 'database.php';
 
-    //     // Retrieve the email of the user making the reservation
-    //     session_start();
-    //     if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true || !isset($_SESSION['username'])) {
-    //         header("Location: login.php");
-    //         exit();
-    //     }
+        // Retrieve the email of the user making the reservation
+        session_start();
+        if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true || !isset($_SESSION['username'])) {
+            header("Location: login.php");
+            exit();
+        }
     //     $username = $_SESSION['username'];
     //     $stmtUserEmail = $conn->prepare("SELECT emailadres FROM gebruikers WHERE gebruikersnaam = ?");
     //     $stmtUserEmail->bind_param("s", $username);
