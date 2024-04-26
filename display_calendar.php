@@ -2,29 +2,6 @@
 include 'database.php';
 session_start();
 
-
-$username = $_SESSION['username'];
-
-// Prepare statement with error handling
-$stmt = $conn->prepare("SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?");
-if ($stmt === false) {
-    exit('MySQL prepare error: ' . $conn->error);
-}
-
-// Bind parameters and execute with error handling
-$stmt->bind_param("s", $username);
-if (!$stmt->execute()) {
-    exit('Query execution error: ' . $stmt->error);
-}
-
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $gebruiker_id = $row['gebruiker_id'];
-} else {
-    exit("Gebruiker niet gevonden.");
-}
-
 // Get advertentie_id
 $stmt = $conn->prepare("SELECT advertentie_id FROM advertenties WHERE verhuurder_id = ?");
 if ($stmt === false) {
