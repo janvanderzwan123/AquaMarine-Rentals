@@ -27,36 +27,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $rowUserEmail = $resultUserEmail->fetch_assoc();
         $user_email = $rowUserEmail['emailadres'];
 
-        // // Retrieve the email of the boat owner
-        // $advertentie_id = $_POST['advertentie_id'] ?? '';
-        // if (empty($advertentie_id)) {
-        //     $error_message = "Invalid advertisement ID.";
-        // } else {
-    //         $stmtBoatOwnerEmail = $conn->prepare("SELECT g.emailadres FROM advertenties AS a JOIN gebruikers AS g ON a.verhuurder_id = g.gebruiker_id WHERE a.advertentie_id = ?");
-    //         $stmtBoatOwnerEmail->bind_param("i", $advertentie_id);
-    //         $stmtBoatOwnerEmail->execute();
-    //         $resultBoatOwnerEmail = $stmtBoatOwnerEmail->get_result();
-    //         $rowBoatOwnerEmail = $resultBoatOwnerEmail->fetch_assoc();
-    //         $boat_owner_email = $rowBoatOwnerEmail['emailadres'];
+        // Retrieve the email of the boat owner
+        $advertentie_id = $_POST['advertentie_id'] ?? '';
+        if (empty($advertentie_id)) {
+            $error_message = "Invalid advertisement ID.";
+        } else {
+            $stmtBoatOwnerEmail = $conn->prepare("SELECT g.emailadres FROM advertenties AS a JOIN gebruikers AS g ON a.verhuurder_id = g.gebruiker_id WHERE a.advertentie_id = ?");
+            $stmtBoatOwnerEmail->bind_param("i", $advertentie_id);
+            $stmtBoatOwnerEmail->execute();
+            $resultBoatOwnerEmail = $stmtBoatOwnerEmail->get_result();
+            $rowBoatOwnerEmail = $resultBoatOwnerEmail->fetch_assoc();
+            $boat_owner_email = $rowBoatOwnerEmail['emailadres'];
 
-    //         // Send email to the boat owner
-    //         $to = $boat_owner_email;
-    //         $subject = "Reservation Request";
-    //         $message = "Selected Dates: " . $selected_dates . "\n\nAdditional Information: " . $additional_info . "\n\nUser Email: " . $user_email;
-    //         $headers = "From: " . $user_email;
+            // Send email to the boat owner
+            $to = $boat_owner_email;
+            $subject = "Reservation Request";
+            $message = "Selected Dates: " . $selected_dates . "\n\nAdditional Information: " . $additional_info . "\n\nUser Email: " . $user_email;
+            $headers = "From: " . $user_email;
 
-    //         // Send email
-    //         if (mail($to, $subject, $message, $headers)) {
-    //             $success_message = "Reservation request sent successfully!";
-    //         } else {
-    //             $error_message = "Failed to send reservation request. Please try again later.";
-    //         }
-    //     }
+            // Send email
+            if (mail($to, $subject, $message, $headers)) {
+                $success_message = "Reservation request sent successfully!";
+            } else {
+                $error_message = "Failed to send reservation request. Please try again later.";
+            }
+        }
 
-    //     // Close database connection
-    //     $stmtUserEmail->close();
-    //     $stmtBoatOwnerEmail->close();
-    //     $conn->close();
+        // Close database connection
+        $stmtUserEmail->close();
+        $stmtBoatOwnerEmail->close();
+        $conn->close();
     }
 }
 ?>
