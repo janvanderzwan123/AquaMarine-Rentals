@@ -11,7 +11,7 @@ $snelheid = isset($_GET['snelheid']) ? $_GET['snelheid'] : '';
 $passagiers = isset($_GET['passagiers']) ? $_GET['passagiers'] : '';
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$sql = "SELECT * FROM advertenties";
+$sql = "SELECT * FROM advertenties WHERE 1=1";
 if (!empty($datum)) {
     $sql .= " AND datum = '$datum'";
 }
@@ -67,7 +67,7 @@ if ($result->num_rows > 0) {
         echo '</div>';
 
         // Display calendar for the boat
-        // echo displayCalendar($conn, $row['advertentie_id']);
+        echo displayCalendar($conn, $row['advertentie_id']);
 
         echo '</div></a>';
     }
