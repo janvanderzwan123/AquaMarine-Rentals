@@ -1,4 +1,5 @@
 <?php
+echo "<div>test</div>";
 include 'database.php';
 include 'display_calendar.php';
 
