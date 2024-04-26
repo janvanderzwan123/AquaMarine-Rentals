@@ -8,8 +8,19 @@ if (!isset($_SESSION['loggedIn']) || $_SESSION['loggedIn'] !== true) {
 }
 
 $username = $_SESSION['username'];
+$stmt = $conn->prepare("SELECT gebruiker_id FROM gebruikers WHERE gebruikersnaam = ?");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+    $gebruiker_id = $row['gebruiker_id'];
+} else {
+    exit("Gebruiker niet gevonden.");
+}
 
-$stmt = $conn->prepare("SELECT advertentie_id FROM advertenties WHERE gebruiker_id = ?");
+
+$stmt = $conn->prepare("SELECT advertentie_id FROM advertenties WHERE verhuurder_id = ?");
 $stmt->bind_param("i", $gebruiker_id);
 $stmt->execute();
 $result = $stmt->get_result();
