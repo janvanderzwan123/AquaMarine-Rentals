@@ -62,18 +62,15 @@ echo "<div>na statement</div>";
 //     $sql .= " WHERE " . implode(' AND ', $conditions);
 // }
 $stmt = $conn->prepare($sql);
+echo "<div>1</div>";
 $typeString = str_repeat('s', count($params)); // Create a string with a number of 's' characters equal to the number of parameters
+echo "<div>2</div>";
 $stmt->bind_param($typeString, ...$params);
+echo "<div>3</div>";
 $stmt->execute();
-if (!$stmt->execute()) {
-    die('Execute failed: ' . $stmt->error);
-}
-
+echo "<div>4</div>";
 $result = $stmt->get_result();
 echo "<div>na result</div>";
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 
 
 if ($result->num_rows > 0) {
