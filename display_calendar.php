@@ -1,25 +1,5 @@
 <?php
 include 'database.php';
-session_start();
-
-// Get advertentie_id
-$stmt = $conn->prepare("SELECT advertentie_id FROM advertenties WHERE verhuurder_id = ?");
-if ($stmt === false) {
-    exit('MySQL prepare error: ' . $conn->error);
-}
-
-$stmt->bind_param("i", $gebruiker_id);
-if (!$stmt->execute()) {
-    exit('Query execution error: ' . $stmt->error);
-}
-
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $advertentie_id = $row['advertentie_id'];
-} else {
-    exit("Advertentie niet gevonden.");
-}
 
 function displayCalendar($conn, $advertentie_id) {
     $month = date('n');
@@ -66,4 +46,5 @@ function displayCalendar($conn, $advertentie_id) {
     return $html;
 }
 ?>
+
 
