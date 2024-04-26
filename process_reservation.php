@@ -23,15 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmtUserEmail = $conn->prepare("SELECT emailadres FROM gebruikers WHERE gebruikersnaam = ?");
         $stmtUserEmail->bind_param("s", $username);
         $stmtUserEmail->execute();
-    //     $resultUserEmail = $stmtUserEmail->get_result();
-    //     $rowUserEmail = $resultUserEmail->fetch_assoc();
-    //     $user_email = $rowUserEmail['emailadres'];
+        $resultUserEmail = $stmtUserEmail->get_result();
+        $rowUserEmail = $resultUserEmail->fetch_assoc();
+        $user_email = $rowUserEmail['emailadres'];
 
-    //     // Retrieve the email of the boat owner
-    //     $advertentie_id = $_POST['advertentie_id'] ?? '';
-    //     if (empty($advertentie_id)) {
-    //         $error_message = "Invalid advertisement ID.";
-    //     } else {
+        // // Retrieve the email of the boat owner
+        // $advertentie_id = $_POST['advertentie_id'] ?? '';
+        // if (empty($advertentie_id)) {
+        //     $error_message = "Invalid advertisement ID.";
+        // } else {
     //         $stmtBoatOwnerEmail = $conn->prepare("SELECT g.emailadres FROM advertenties AS a JOIN gebruikers AS g ON a.verhuurder_id = g.gebruiker_id WHERE a.advertentie_id = ?");
     //         $stmtBoatOwnerEmail->bind_param("i", $advertentie_id);
     //         $stmtBoatOwnerEmail->execute();
