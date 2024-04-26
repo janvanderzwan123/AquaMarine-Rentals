@@ -8,7 +8,6 @@ function displayCalendar($conn, $advertentie_id) {
     $firstDayOfWeek = date('N', mktime(0, 0, 0, $month, 1, $year));
     $eventTitles = array_fill(1, $numDays, 'Onbeschikbaar');
 
-    // Prepare statement with error handling
     $sql = "SELECT DAY(start_date) AS day, event_title FROM verhuurder_calendar WHERE MONTH(start_date) = ? AND YEAR(start_date) = ? AND advertentie_id = ?";
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
@@ -46,5 +45,3 @@ function displayCalendar($conn, $advertentie_id) {
     return $html;
 }
 ?>
-
-
