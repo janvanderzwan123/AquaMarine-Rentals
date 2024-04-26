@@ -65,8 +65,15 @@ $stmt = $conn->prepare($sql);
 $typeString = str_repeat('s', count($params)); // Create a string with a number of 's' characters equal to the number of parameters
 $stmt->bind_param($typeString, ...$params);
 $stmt->execute();
+if (!$stmt->execute()) {
+    die('Execute failed: ' . $stmt->error);
+}
+
 $result = $stmt->get_result();
 echo "<div>na result</div>";
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 
 
 if ($result->num_rows > 0) {
