@@ -1,6 +1,5 @@
 <?php
 include 'database.php';
-include 'display_calendar.php';
 
 $datum = $_GET['datum'] ?? '';
 $locatie = $_GET['locatie'] ?? '';
@@ -87,7 +86,7 @@ if ($result->num_rows > 0) {
         echo '</div>';
 
         // Display calendar for the boat
-        echo displayCalendar($conn, $row['advertentie_id']);
+        // echo displayCalendar($conn, $row['advertentie_id']);
 
         echo '</div></a>';
     }
