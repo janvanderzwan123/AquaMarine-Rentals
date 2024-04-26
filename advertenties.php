@@ -53,8 +53,11 @@ echo "<div>na calendar</div>";
 //     $params[] = $search;
 //     $params[] = $search;
 // }
+echo "<div>voor statement</div>";
 
 $sql = "SELECT * FROM advertenties";
+echo "<div>na statement</div>";
+
 // if (!empty($conditions)) {
 //     $sql .= " WHERE " . implode(' AND ', $conditions);
 // }
