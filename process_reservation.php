@@ -19,10 +19,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: login.php");
             exit();
         }
-    //     $username = $_SESSION['username'];
-    //     $stmtUserEmail = $conn->prepare("SELECT emailadres FROM gebruikers WHERE gebruikersnaam = ?");
-    //     $stmtUserEmail->bind_param("s", $username);
-    //     $stmtUserEmail->execute();
+        $username = $_SESSION['username'];
+        $stmtUserEmail = $conn->prepare("SELECT emailadres FROM gebruikers WHERE gebruikersnaam = ?");
+        $stmtUserEmail->bind_param("s", $username);
+        $stmtUserEmail->execute();
     //     $resultUserEmail = $stmtUserEmail->get_result();
     //     $rowUserEmail = $resultUserEmail->fetch_assoc();
     //     $user_email = $rowUserEmail['emailadres'];
