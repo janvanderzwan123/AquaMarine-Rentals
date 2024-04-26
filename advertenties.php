@@ -66,7 +66,7 @@ $typeString = str_repeat('s', count($params)); // Create a string with a number 
 $stmt->bind_param($typeString, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
-
+echo "<div>na result</div>";
 
 
 if ($result->num_rows > 0) {
