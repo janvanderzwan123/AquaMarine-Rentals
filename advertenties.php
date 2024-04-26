@@ -1,6 +1,11 @@
 <?php
+echo "<div>voor database</div>";
 include 'database.php';
+echo "<div>na database</div>";
+echo "<div>voor calendar</div>";
 include 'display_calendar.php';
+echo "<div>na calendar</div>";
+
 
 // $datum = $_GET['datum'] ?? '';
 // $locatie = $_GET['locatie'] ?? '';
@@ -53,14 +58,12 @@ $sql = "SELECT * FROM advertenties";
 // if (!empty($conditions)) {
 //     $sql .= " WHERE " . implode(' AND ', $conditions);
 // }
-echo $sql;
 $stmt = $conn->prepare($sql);
 $typeString = str_repeat('s', count($params)); // Create a string with a number of 's' characters equal to the number of parameters
 $stmt->bind_param($typeString, ...$params);
 $stmt->execute();
 $result = $stmt->get_result();
 
-echo "<div>$result</div>";
 
 
 if ($result->num_rows > 0) {
